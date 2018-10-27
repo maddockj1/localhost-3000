@@ -2,12 +2,12 @@
 
 localhost3000 :: A social networking site for the creation and sharing of gaming events.
 
-![index.html](./mdimg/1.jpg)
-![index.html2](./mdimg/2.jpg)
-![user.html](./mdimg/3.jpg)
-![event.html](./mdimg/4.jpg)
+![index.html](/public/mdimg/1.jpg)
+![index.html2](/public/mdimg/2.jpg)
+![user.html](/public/mdimg/3.jpg)
+![event.html](/public/mdimg/4.jpg)
 
-![ERD](./mdimg/localhost3000.png)
+![ERD](/public/mdimg/localhost3000.png)
 
 ##Main Features // User Stories
 As a user, I would like to be able to log-in to the site using Twitch so that my password is never handled by this site.

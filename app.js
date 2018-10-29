@@ -24,7 +24,7 @@ passport.use(new twitchStrategy({
   clientID: 'qocfwoezpv67e55q622vcwzi17esta',
   clientSecret: 'tstttnp86ibb70ks4vw1ewxj1nmzdp',
   callbackURL: "http://localhost:3000/auth/twitch/callback",
-  scope: "user_read"
+  scope: "user:read:email"
 }, function(accessToken, refreshToken, profile, done) {
   // need to figure out how to ass the profile.id to create a user
   User.findOrCreate({

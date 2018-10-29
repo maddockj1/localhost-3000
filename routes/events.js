@@ -88,4 +88,23 @@ router.put('/:id', (req, res, next) => {
   })
 })
 
+// DELETE event
+router.delete('/:id', function(req, res, next) {
+  knex('events')
+    .where('id', req.params.id)
+    .first()
+    .then((row) => {
+      if(!row) return next()
+      knex('events')
+        .del()
+        .where('id', req.params.id)
+        .then(() => {
+          res.send(`Event ID ${req.params.id} Deleted`)
+        })
+    })
+    .catch((err) => {
+      next(err)
+    })
+})
+
 module.exports = router

@@ -9,10 +9,10 @@ return knex.schema.createTable('users', function(table) {
  table.string('lastName', 40).notNullable().defaultTo('')
  table.string('address', 255).notNullable().defaultTo('')
  table.string('city', 100).notNullable().defaultTo('')
- table.integer('zip').min(00501).max(99950).notNullable()
+ table.integer('zip').notNullable()
  table.date('birthday').notNullable()
  table.integer('favoritePlatform').notNullable()
- table.foreign('favoritePlatform').references(platforms.id)
+ table.foreign('favoritePlatform').references('platforms.id')
  table.timestamps(true, true)
 })
 }

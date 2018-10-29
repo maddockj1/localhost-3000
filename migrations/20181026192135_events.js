@@ -13,7 +13,7 @@ return knex.schema.createTable('events', function(table) {
  table.string('address', 255)
  table.string('city', 100)
  table.integer('zip', 255)
- table.string('link', 255))
+ table.string('link', 144)
  table.date('date').notNullable()
  table.time('start').notNullable()
  table.time('end').notNullable()

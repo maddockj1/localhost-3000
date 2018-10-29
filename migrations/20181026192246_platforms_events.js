@@ -1,6 +1,6 @@
 
 exports.up = function(knex, Promise) {
-return knex.schema.createTable('platform_events', function(table) {
+return knex.schema.createTable('platforms_events', function(table) {
  // TABLE COLUMN DEFINITIONS HERE
  table.increments()
  table.number('platform_id')
@@ -11,5 +11,5 @@ return knex.schema.createTable('platform_events', function(table) {
 })
 }
 exports.down = function(knex, Promise) {
-return knex.schema.dropTableIfExists('platform_events')
+return knex.schema.dropTableIfExists('platforms_events')
 }

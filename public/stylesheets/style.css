@@ -1,8 +1,32 @@
-body {
+/* body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+} */
+
+.logo {
+  font-family: 'Wallpoet', cursive;
+  background: -webkit-linear-gradient(#eee, #333);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.logo span {
+  font-weight: bold;
+}
+
+.header_row {
+  background-image: url(../img/index/background-industrial-pattern-seamless.jpg);
+  padding-bottom: 8px
+}
+
+.btn-small {
+  background-image: url(../img/index/btn-background-stainless-steel-seamless.jpg);
+  background-color: null;
+}
+
+#video_background video {
+  height: 
 }

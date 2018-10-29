@@ -3,6 +3,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var eventsRouter = require('./routes/events')
@@ -27,5 +28,21 @@ app.use('/platforms', platformsRouter);
 app.use('/platforms_events', platformsEventsRouter)
 app.use('/user_events', userEvents)
 app.use(`/event_users`, eventUsers)
+
+//Error handling below
+app.use((err, req, res, next) => {
+  const status = err.status || 500
+  res.status(status).json({
+    error: err
+  })
+})
+
+app.use((req, res, next) => {
+  res.status(404).json({
+    error: {
+      message: 'Not found'
+    }
+  })
+})
 
 module.exports = app;

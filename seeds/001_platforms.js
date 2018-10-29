@@ -6,33 +6,34 @@ exports.seed = function (knex, Promise) {
       return knex('platforms').insert([{
             id: 1,
             platform: 'Nintendo',
-            createdAt: Date.now(),
-            updatedAt: Date.now()
-          },
-          {
-            id: 2,
-            platform: 'Super Nintendo',
-            createdAt: Date.now(),
-            updatedAt: Date.now()
-          },
-          {
-            id: 3,
-            platform: 'Nintendo 64',
-            createdAt: Date.now(),
-            updatedAt: Date.now()
-          },
-          {
-            id: 4,
-            platform: 'Nintendo Wii',
-            createdAt: Date.now(),
-            updatedAt: Date.now()
-          },
-          {
-            id: 5,
-            platform: 'Nintendo Switch',
-            createdAt: Date.now(),
-            updatedAt: Date.now()
-          },
+            created_at: new Date(2018, 10, 28, 9, 30, 0, 0),
+            updated_at: new Date(2018, 10, 28, 9, 30, 0, 0)
+          }
+          // },
+          // {
+          //   id: 2,
+          //   platform: 'Super Nintendo',
+          //   createdAt: Date.now(),
+          //   updatedAt: Date.now()
+          // },
+          // {
+          //   id: 3,
+          //   platform: 'Nintendo 64',
+          //   createdAt: Date.now(),
+          //   updatedAt: Date.now()
+          // },
+          // {
+          //   id: 4,
+          //   platform: 'Nintendo Wii',
+          //   createdAt: Date.now(),
+          //   updatedAt: Date.now()
+          // },
+          // {
+          //   id: 5,
+          //   platform: 'Nintendo Switch',
+          //   createdAt: Date.now(),
+          //   updatedAt: Date.now()
+          // },
         ])
         .then(function () {
           // Moves id column (PK) auto-incrementer to correct value after inserts

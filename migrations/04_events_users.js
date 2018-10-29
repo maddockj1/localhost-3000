@@ -2,11 +2,10 @@
 exports.up = function(knex, Promise) {
 return knex.schema.createTable('event_users', function(table) {
  // TABLE COLUMN DEFINITIONS HERE
- table.increments()
- table.integer('event_id')
- table.foreign('events').references('events.id')
- table.integer('user_id')
- table.foreign('users').references('users.id')
+ table.integer('events_id')
+ table.foreign('events_id').references('events.id')
+ table.integer('users_id')
+ table.foreign('users_id').references('users.id')
  table.timestamps(true, true)
 })
 }

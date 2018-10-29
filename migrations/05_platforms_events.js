@@ -3,9 +3,9 @@ exports.up = function(knex, Promise) {
 return knex.schema.createTable('platforms_events', function(table) {
  // TABLE COLUMN DEFINITIONS HERE
  table.increments()
- table.number('platform_id')
+ table.integer('platform_id')
  table.foreign('platform_id').references('platforms.id')
- table.number('event_id')
+ table.integer('event_id')
  table.foreign('event_id').references('events.id')
  table.timestamps(true, true)
 })

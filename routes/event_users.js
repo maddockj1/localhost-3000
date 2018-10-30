@@ -17,6 +17,11 @@ const verifyId = (req, res, next) => {
   }
 }
 
+const verifyHost = (req, res, next) => {
+  // should probably not be able to see a list of attendees unless you are the host? for now just a placeholder
+  next()
+}
+
 router.get(`/`, (req, res, next) => {
   let err = new Error()
   err.message = `ID is required`
@@ -25,7 +30,7 @@ router.get(`/`, (req, res, next) => {
 })
 
 //GET ALL USERS FOR ONE event
-router.get('/:id', verifyId, (req, res, next) => {
+router.get('/:id', verifyId, verifyHost, (req, res, next) => {
   knex('events_users')
     .where('events_id', req.params.id)
     .join('users', 'events_users.users_id', 'users.id')

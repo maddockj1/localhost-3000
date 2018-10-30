@@ -25,12 +25,12 @@ passport.use(new twitchStrategy({
   clientSecret: 'tstttnp86ibb70ks4vw1ewxj1nmzdp',
   callbackURL: "http://localhost:3000/",
   scope: "user:read:email"
-}, function(accessToken, refreshToken, profile, done) {
+}, function (accessToken, refreshToken, profile, done) {
   console.log(profile)
   // need to figure out how to asssess the profile.id to create a user
   User.findOrCreate({
     twitchId: profile.id
-  }, function(err, user) {
+  }, function (err, user) {
     return done(err, user);
   });
 }));
@@ -40,16 +40,16 @@ app.get("/auth/twitch", passport.authenticate("twitch"));
 
 app.get("/auth/twitch/callback", passport.authenticate("twitch", {
   failureRedirect: "/"
-}), function(req, res) {
+}), function (req, res) {
   // Successful authentication, redirect home.
   res.redirect("/");
 });
 //this wires up passort's session code to your session
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function (user, done) {
   done(null, user);
 });
 
-passport.deserializeUser(function(user, done) {
+passport.deserializeUser(function (user, done) {
   done(null, user);
 });
 

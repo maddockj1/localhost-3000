@@ -17,6 +17,8 @@ instead of a search field, open a sidebar from the right.
   <link type="text/css" rel="stylesheet" href="./stylesheets/style.css" />
   <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!--AXIOS-->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -51,6 +53,17 @@ instead of a search field, open a sidebar from the right.
   </div>
   <!-- <div id="ueParallax" class="container"> -->
   <div id="parallax_container" class="container">
+    <table id="list-movies">
+            <thead>
+              <tr>
+                <th>Event Name</th>
+                <th>Event Description</th>
+                <th>Delete</th>
+                <th>Edit</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
 
   <!-- </div> -->
   <!-- <div id="usersParallax" class="parallax-container" hidden>

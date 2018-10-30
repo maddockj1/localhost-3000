@@ -36,8 +36,18 @@ const checkUsername = (req, res, next) => {
     })
 }
 
+const jwtVerify = (req, res, next) => {
+  jwt.verify(req.cookies.token, "thisfuckingsucks", (err, _payload) => {
+    if (err) {
+      return next(err);
+    } else {
+      next()
+    }
+  })
+}
+
 // GET ALL users
-router.get('/', (req, res, next) => {
+router.get('/', jwtVerify, (req, res, next) => {
   knex('users')
     .then((rows) => {
       res.json(rows)
@@ -48,7 +58,7 @@ router.get('/', (req, res, next) => {
 })
 
 //GET ONE user
-router.get('/:id', verifyId, (req, res, next) => {
+router.get('/:id', verifyId, jwtVerify, (req, res, next) => {
   knex('users')
     .where('id', req.params.id)
     .then((rows) => {

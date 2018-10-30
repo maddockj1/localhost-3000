@@ -60,7 +60,11 @@ app.get("/auth/twitch/callback", passport.authenticate("twitch", {
   failureRedirect: "/"
 }), function (req, res) {
   // Successful authentication, redirect home.
+  //set something i can use EVERYWHERE
   console.log(req.user);
+  // set req.user.id to jwt
+  // set that jwt to a cookie
+  // expire the cookie and jwt
   res.redirect("/");
 })
 

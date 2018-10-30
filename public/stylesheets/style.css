@@ -69,3 +69,8 @@ div.section{
 .pPlat {
   display: inline-block;
 }
+
+div.col img{
+  height: 128px;
+  width: 128px
+}

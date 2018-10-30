@@ -151,17 +151,18 @@ router.put('/:id', verifyId, verifyUser, (req, res, next) => {
 
 // DELETE event
 router.delete('/:id', verifyId, verifyUser, jwtVerify, (req, res, next) => {
-  if (req.payload.id !== req.params.id) {
-    let err = new Error()
-    err.status = 401
-    err.message = "You may only delete your own events"
-    return next(err)
-  }
   knex('events')
     .where('id', req.params.id)
     .first()
     .then((row) => {
+      console.log(row);
       if (!row) return next()
+      if (req.payload.id !== row.host_id) {
+        let err = new Error()
+        err.status = 401
+        err.message = "You may only delete your own events"
+        return next(err)
+      }
       knex('events')
         .del()
         .where('id', req.params.id)

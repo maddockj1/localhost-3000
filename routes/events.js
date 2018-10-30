@@ -29,7 +29,7 @@ const verifyBody = (req, res, next) => {
     start,
     end,
     privacy
-  } = req.params
+  } = req.body
   if (!eventName || !platform_id || !host_id || !start || !end || !privacy) {
     let err = new Error()
     err.status = 400
@@ -45,10 +45,29 @@ const verifyUser = (req, res, next) => {
   next()
 }
 
-const checkForDuplicateEvents = (req, res, next) => {
-  // This should at least check to see if a user is already hosting an event on that particular day. For now it's just a placeholder.
-  next()
-}
+//Working this Middleware. Basic logic below, but need to test/get working
+// const checkForDuplicateEvents = (req, res, next) => {
+//   console.log('CHECK DUPLICATE EVENTS Middleware>>>>');
+//   //Filter events to a list for a particular day
+//   let requestDate = req.body.start.toString()
+//   requestDate = requestDate.substring(0, 10)
+//   //Logic for below: search events that have a start time betwen the begging of the request date and the end of the request date
+//   knex('events')
+//   .where(knex.raw('select * from "events" where "start" > `${requestDate}T00:00:00Z` and "start" < `${requestDate}T24:24:24Z`'))
+//   .then((data) => {
+//     if(data) {
+//       console.log('Already an EVENT FOR THAT DAY');
+//     }
+//   })
+//   //Search the host_id for the events on that day to see if the user already has created an event for that date
+//
+//   //If the user already has event, don't let them create a new ONE
+//
+//   //If the user does not already have an event, let them create an event
+//
+//   //This should at least check to see if a user is already hosting an event on that particular day. For now it's just a placeholder.
+//   next()
+// }
 // READ ALL records for events
 router.get('/', (req, res, next) => {
   knex('events')
@@ -73,7 +92,7 @@ router.get('/:id', verifyId, (req, res, next) => {
 })
 
 // CREATE ONE record for this events
-router.post('/', verifyBody, checkForDuplicateEvents, (req, res, next) => {
+router.post('/', verifyBody, (req, res, next) => {
   knex('events')
     .insert({
       "eventName": req.body.eventName,

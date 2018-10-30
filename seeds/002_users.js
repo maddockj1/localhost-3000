@@ -5,7 +5,7 @@ exports.seed = function (knex, Promise) {
       // Inserts seed entries
       return knex('users').insert([{
             id: 1,
-            username: 'Stinkfloyd',
+            username: 'stinkfloyd',
             email: 'nicholas_tzavaras@yahoo.com',
             twitchId: 122662448,
             // firstName: 'Nick',

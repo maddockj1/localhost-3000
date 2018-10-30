@@ -59,6 +59,15 @@ router.get('/:id', verifyId, (req, res, next) => {
     })
 })
 
+
+const create = (body) => {
+  return knex('users')
+    .insert(body)
+    .returning('*')
+    .then(user => user[0])
+    .catch(err => Promise.reject(err))
+}
+
 //CREATE users
 router.post('/', checkUsername, (req, res, next) => {
   knex('users')
@@ -125,4 +134,7 @@ router.delete('/:id', verifyId, (req, res, next) => {
     })
 })
 
-module.exports = router;
+module.exports = {
+  router,
+  create
+};

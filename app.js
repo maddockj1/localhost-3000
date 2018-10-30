@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+let knex = require(`./knex`);
 
 
 var indexRouter = require('./routes/index');
@@ -19,7 +20,7 @@ const passport = require('passport');
 const cookieSession = require('cookie-session')
 const twitchStrategy = require('passport-twitch').Strategy;
 
-app.use(passport.initialize())
+
 
 //auth secrects/ids and function when it happens.
 passport.use(new twitchStrategy({
@@ -29,33 +30,51 @@ passport.use(new twitchStrategy({
   scope: "user_read"
 }, function (accessToken, refreshToken, profile, done) {
   // need to figure out how to asssess the profile.id to create a user
-  console.log(`refresh:`,
-    refreshToken);
-  User.findOrCreate({
-    twitchId: profile.id
-  }, function (err, user) {
-    return done(err, user);
-  });
+  knex('users')
+    .where('username', profile.username)
+    .then((rows) => {
+      if (rows[0]) {
+        done(null, rows[0])
+      } else {
+        let obj = {
+          username: profile.username,
+          twitchId: profile.id,
+          email: profile.email
+        }
+        usersRouter.create(obj)
+        done(null, obj)
+      }
+    })
 }));
 
+// // set up session cookies
+// app.use(cookieSession({
+//   maxAge: 24 * 60 * 60 * 1000,
+//   keys: [process.env.COOKIE_SECRET]
+// }))
+app.use(passport.initialize())
+// app.use(passport.session())
 
 app.get("/auth/twitch", passport.authenticate("twitch"));
 app.get("/auth/twitch/callback", passport.authenticate("twitch", {
   failureRedirect: "/"
 }), function (req, res) {
   // Successful authentication, redirect home.
+  console.log(req.user);
   res.redirect("/");
 })
 
 // this wires up passort's session code to your session
 passport.serializeUser(function (user, done) {
-  done(null, user.id);
+  done(null, user.twitchId)
 })
 
-passport.deserializeUser(function (user, done) {
-  userModel.getOneUser(id)
-    .then((user) => {
-      done(null, user)
+passport.deserializeUser(function (id, done) {
+  knex('users')
+    .where('id', id)
+    .then((rows) => {
+      console.log(rows);
+      done(null, rows[0])
     })
 })
 
@@ -69,7 +88,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/users', usersRouter.router);
 app.use('/events', eventsRouter);
 app.use('/platforms', platformsRouter);
 app.use('/platforms_events', platformsEventsRouter)

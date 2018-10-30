@@ -1,5 +1,5 @@
 /* TESTING VARIABLES */
-let tmpArr = [1,2,3,4,5,6,7,8,9,10]
+let tmpArr = [{platform: `xbox360`, title: `C'mon over for a LAN party. BYOB. 18+`}, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 /* TESTING VARIABLES */
 
 let counter = 0
@@ -33,10 +33,10 @@ function populateParallax (arr){
   console.log("populateParallax")
   let templateHead = `<div class="parallax-container"><div class="parallax"><img src="https://g.foolcdn.com/editorial/images/453677/mans-hands-holding-a-video-game-controller.jpg"></div></div>`
 
-  let templateBody = `<div class="section white"><div class="row container"><h2 class="header pHeader">Event Title</h2><p class="grey-text text-darken-3 lighten-3 pPlat">Platform</p><p class="grey-text text-darken-3 lighten-3 pDateTime">Parallax is an effect where the background content or image in this case, is moved at a different speed than the foreground content while scrolling.</p>    <br><p class="grey-text text-darken-3 lighten-3 pdesc">Parallax is an effect where the background content or image in this case, is moved at a different speed than the foreground content while scrolling.</p></div><div class="row container"><div class="col s10 m10 l10"></div><div class="col s2 m2 l2"><a class="waves-effect waves-light btn"><i class="material-icons right">cloud</i>button</a></div> </div></div><div class="parallax-container"><div class="parallax"><img src="https://g.foolcdn.com/editorial/images/453677/mans-hands-holding-a-video-game-controller.jpg"></div></div>`
+  let templateBody = `<div class="section white"><div class="row container"><h3 class="header pHeader">Event Title</h3><h6>Platform:</h6><span class="grey-text text-darken-3 lighten-3 pPlat" style="inline">Platform</span><h6>Date & Time:</h6><span class="grey-text text-darken-3 lighten-3 pDateTime">datetime placeholder</span><h6>Description:</h6><span class="grey-text text-darken-3 lighten-3 pdesc">C'mon over for a LAN party. BYOB. 18+</span></div><div class="row container"><div class="col s6 m6 l6"></div><div class="col s2 m2 l2"><a class="waves-effect waves-light btn"><i class="material-icons right">cloud</i>button</a></div><div class="col s2 m2 l2"><a class="waves-effect waves-light btn"><i class="material-icons right">cloud</i>button</a></div><div class="col s2 m2 l2"><a class="waves-effect waves-light btn"><i class="material-icons right">cloud</i>button</a></div> </div></div><div class="parallax-container"><div class="parallax"><img src="https://g.foolcdn.com/editorial/images/453677/mans-hands-holding-a-video-game-controller.jpg"></div></div>`
   let parCont = document.getElementById('parallax_container')
   parCont.innerHTML += templateHead
-  for(let i = 0; i < arr.length; i++){
+  for(let i = 0; i < 1; i++){
     parCont.innerHTML += templateBody
     counter++
   }

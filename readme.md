@@ -1,3 +1,5 @@
+# set up .env to hide secrets
+
 # localhost3000
 
 ## localhost3000 :: A social networking site for the creation and sharing of gaming events.

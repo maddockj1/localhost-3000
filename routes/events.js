@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const knex = require('../knex')
+const jwt = require('jsonwebtoken')
 
 
 
@@ -40,36 +41,29 @@ const verifyBody = (req, res, next) => {
   }
 }
 
+const jwtVerify = (req, res, next) => {
+  jwt.verify(req.cookies.token, "thisfuckingsucks", (err, _payload) => {
+    if (err) {
+      return next(err);
+    } else {
+      req.payload = _payload
+      next()
+    }
+  })
+}
+
 const verifyUser = (req, res, next) => {
   // This needs to make sure the user trying to delete the event is the user who is hosting the event. For now its just a placeholder.
   next()
 }
 
-//Working this Middleware. Basic logic below, but need to test/get working
-// const checkForDuplicateEvents = (req, res, next) => {
-//   console.log('CHECK DUPLICATE EVENTS Middleware>>>>');
-//   //Filter events to a list for a particular day
-//   let requestDate = req.body.start.toString()
-//   requestDate = requestDate.substring(0, 10)
-//   //Logic for below: search events that have a start time betwen the begging of the request date and the end of the request date
-//   knex('events')
-//   .where(knex.raw('select * from "events" where "start" > `${requestDate}T00:00:00Z` and "start" < `${requestDate}T24:24:24Z`'))
-//   .then((data) => {
-//     if(data) {
-//       console.log('Already an EVENT FOR THAT DAY');
-//     }
-//   })
-//   //Search the host_id for the events on that day to see if the user already has created an event for that date
-//
-//   //If the user already has event, don't let them create a new ONE
-//
-//   //If the user does not already have an event, let them create an event
-//
-//   //This should at least check to see if a user is already hosting an event on that particular day. For now it's just a placeholder.
-//   next()
-// }
+const checkForDuplicateEvents = (req, res, next) => {
+  // This should at least check to see if a user is already hosting an event on that particular day. For now it's just a placeholder.
+  next()
+}
+
 // READ ALL records for events
-router.get('/', (req, res, next) => {
+router.get('/', jwtVerify, (req, res, next) => {
   knex('events')
     .then((rows) => {
       res.json(rows)
@@ -78,6 +72,9 @@ router.get('/', (req, res, next) => {
       next(err)
     })
 })
+
+
+
 
 // READ ONE record for this events
 router.get('/:id', verifyId, (req, res, next) => {
@@ -153,7 +150,13 @@ router.put('/:id', verifyId, verifyUser, (req, res, next) => {
 })
 
 // DELETE event
-router.delete('/:id', verifyId, verifyUser, (req, res, next) => {
+router.delete('/:id', verifyId, verifyUser, jwtVerify, (req, res, next) => {
+  if (req.payload.id !== req.params.id) {
+    let err = new Error()
+    err.status = 401
+    err.message = "You may only delete your own events"
+    return next(err)
+  }
   knex('events')
     .where('id', req.params.id)
     .first()

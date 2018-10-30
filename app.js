@@ -19,15 +19,18 @@ const passport = require('passport');
 const cookieSession = require('cookie-session')
 const twitchStrategy = require('passport-twitch').Strategy;
 
+app.use(passport.initialize())
+
 //auth secrects/ids and function when it happens.
 passport.use(new twitchStrategy({
   clientID: 'qocfwoezpv67e55q622vcwzi17esta',
   clientSecret: 'tstttnp86ibb70ks4vw1ewxj1nmzdp',
-  callbackURL: "http://localhost:3000/",
-  scope: "user:read:email"
+  callbackURL: "/auth/twitch/callback",
+  scope: "user_read"
 }, function (accessToken, refreshToken, profile, done) {
-  console.log(profile)
   // need to figure out how to asssess the profile.id to create a user
+  console.log(`refresh:`,
+    refreshToken);
   User.findOrCreate({
     twitchId: profile.id
   }, function (err, user) {
@@ -37,21 +40,24 @@ passport.use(new twitchStrategy({
 
 
 app.get("/auth/twitch", passport.authenticate("twitch"));
-
 app.get("/auth/twitch/callback", passport.authenticate("twitch", {
   failureRedirect: "/"
 }), function (req, res) {
   // Successful authentication, redirect home.
   res.redirect("/");
-});
-//this wires up passort's session code to your session
+})
+
+// this wires up passort's session code to your session
 passport.serializeUser(function (user, done) {
-  done(null, user);
-});
+  done(null, user.id);
+})
 
 passport.deserializeUser(function (user, done) {
-  done(null, user);
-});
+  userModel.getOneUser(id)
+    .then((user) => {
+      done(null, user)
+    })
+})
 
 
 app.use(logger('dev'));

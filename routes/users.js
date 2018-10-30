@@ -17,6 +17,25 @@ const verifyId = (req, res, next) => {
   }
 }
 
+const checkUsername = (req, res, next) => {
+  let {
+    username
+  } = req.body
+  knex('users')
+    .where('username', username)
+    .first()
+    .then((row) => {
+      if (row) {
+        let err = new Error()
+        err.status = 401
+        err.message = "Username already exists"
+        next(err)
+      } else {
+        next()
+      }
+    })
+}
+
 // GET ALL users
 router.get('/', (req, res, next) => {
   knex('users')
@@ -41,18 +60,12 @@ router.get('/:id', verifyId, (req, res, next) => {
 })
 
 //CREATE users
-router.post('/', (req, res, next) => {
+router.post('/', checkUsername, (req, res, next) => {
   knex('users')
     .insert({
       "username": req.body.username,
       "email": req.body.email,
-      "firstName": req.body.firstName,
-      "lastName": req.body.lastName,
-      "address": req.body.address,
-      "city": req.body.city,
-      "zip": req.body.zip,
-      "birthday": req.body.birthday,
-      "favoritePlatform": req.body.favoritePlatform
+      "twitchId": req.body.id
     })
     .returning('*')
     .then((data) => {

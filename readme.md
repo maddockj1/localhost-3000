@@ -1,4 +1,4 @@
-# set up .env to hide secrets
+# set up .env to hide secrets also delete this line later!
 
 # localhost3000
 

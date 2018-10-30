@@ -19,7 +19,7 @@ const passport = require('passport');
 const cookieSession = require('cookie-session')
 const twitchStrategy = require('passport-twitch').Strategy;
 
-//auth secrects/ids and function when it happens.
+  //auth secrects/ids and function when it happens.
 passport.use(new twitchStrategy({
   clientID: 'qocfwoezpv67e55q622vcwzi17esta',
   clientSecret: 'tstttnp86ibb70ks4vw1ewxj1nmzdp',

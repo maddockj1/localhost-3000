@@ -3,6 +3,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 let knex = require(`./knex`);
+let jwt = require('jsonwebtoken')
 
 
 var indexRouter = require('./routes/index');
@@ -63,9 +64,17 @@ app.get("/auth/twitch/callback", passport.authenticate("twitch", {
   //set something i can use EVERYWHERE
   console.log(req.user);
   // set req.user.id to jwt
+  let payload = {
+    id: req.user.id,
+    loggedIn: true
+  }
+  let token = jwt.sign(payload, 'thisfuckingsucks')
   // set that jwt to a cookie
+  res.cookie("token", token, {
+    maxAge: 900000
+  })
   // expire the cookie and jwt
-  res.redirect("/");
+  res.redirect("/events");
 })
 
 // this wires up passort's session code to your session

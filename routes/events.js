@@ -51,7 +51,8 @@ const checkForDuplicateEvents = (req, res, next) => {
 }
 // READ ALL records for events
 router.get('/', (req, res, next) => {
-  console.log(req.user);
+
+  console.log(req.cookies);
   knex('events')
     .then((rows) => {
       res.json(rows)

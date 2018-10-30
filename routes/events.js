@@ -32,9 +32,9 @@ router.get('/', (req, res, next) => {
 // READ ONE record for this events
 router.get('/:id', verifyId, (req, res, next) => {
   knex('events')
-    .where('id', req.params.id)
-    .then((rows) => {
-      res.json(rows)
+    .where('id', req.params.id).first()
+    .then((row) => {
+      res.json(row)
     })
     .catch((err) => {
       next(err)

@@ -29,12 +29,12 @@ router.get('/', (req, res, next) => {
     })
 })
 
-//GET ONE platform
+// GET ONE platform
 router.get('/:id', verifyId, (req, res, next) => {
   knex('platforms')
-    .where('id', req.params.id)
-    .then((rows) => {
-      res.json(rows)
+    .where('id', req.params.id).first()
+    .then((row) => {
+      res.json(row)
     })
     .catch((err) => {
       next(err)

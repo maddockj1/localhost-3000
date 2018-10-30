@@ -69,6 +69,7 @@ function getEvents() {
       editButton.innerText = `Edit`
 
       deleteButton.setAttribute('data-id', event.id)
+      deleteButton.setAttribute('host-id', event.host_id)
       deleteButton.setAttribute('class', 'waves-effect waves-light btn')
 
       editButton.setAttribute('data-id', event.id)
@@ -76,7 +77,6 @@ function getEvents() {
 
       deleteButton.addEventListener('click', (ev) => {
         let eventId = ev.target.getAttribute('data-id')
-
         // DELETE THIS RECORD!
         axios.delete(`/events/${eventId}`)
         .then((response) => {

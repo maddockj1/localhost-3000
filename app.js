@@ -74,7 +74,7 @@ app.get("/auth/twitch/callback", passport.authenticate("twitch", {
     maxAge: 900000
   })
   // expire the cookie and jwt
-  res.redirect("/events");
+  res.redirect("/");
 })
 
 // this wires up passort's session code to your session

@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function getEvents() {
   const contentArea = document.getElementById('parallax_container')
-axios.get('http://localhost:3000/events')
+  axios.get('http://localhost:3000/events')
     .then((response) => {
       response.data.forEach((event) => {
 
@@ -109,7 +109,3 @@ axios.get('http://localhost:3000/events')
 
 // Materialize re-initialize functions
 // Run each respective function to re-initialize any element that needs an initialization any time you change its content
-function initParallax () {
-  let elems = document.querySelectorAll('.parallax');
-  let instances = M.Parallax.init(elems);
-}

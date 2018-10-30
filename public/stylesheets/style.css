@@ -66,6 +66,6 @@ div.section{
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d8e0de', endColorstr='#0e0e0e',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
-div.col a {
-
+.pPlat {
+  display: inline-block;
 }

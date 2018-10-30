@@ -3,7 +3,9 @@ const router = express.Router()
 const knex = require('../knex')
 
 
+
 // Middleware Functions
+// Verifies the ID is a number
 const verifyId = (req, res, next) => {
   let {
     id
@@ -18,6 +20,35 @@ const verifyId = (req, res, next) => {
   }
 }
 
+// Verifies that all required information is present before the post is sent.
+const verifyBody = (req, res, next) => {
+  let {
+    eventName,
+    platform_id,
+    host_id,
+    start,
+    end,
+    privacy
+  } = req.params
+  if (!eventName || !platform_id || !host_id || !start || !end || !privacy) {
+    let err = new Error()
+    err.status = 400
+    err.message = `Bad POST Request`
+    next(err)
+  } else {
+    next()
+  }
+}
+
+const verifyUser = (req, res, next) => {
+  // This needs to make sure the user trying to delete the event is the user who is hosting the event. For now its just a placeholder.
+  next()
+}
+
+const checkForDuplicateEvents = (req, res, next) => {
+  // This should at least check to see if a user is already hosting an event on that particular day. For now it's just a placeholder.
+  next()
+}
 // READ ALL records for events
 router.get('/', (req, res, next) => {
   knex('events')
@@ -42,7 +73,7 @@ router.get('/:id', verifyId, (req, res, next) => {
 })
 
 // CREATE ONE record for this events
-router.post('/', (req, res, next) => {
+router.post('/', verifyBody, checkForDuplicateEvents, (req, res, next) => {
   knex('events')
     .insert({
       "eventName": req.body.eventName,
@@ -52,7 +83,6 @@ router.post('/', (req, res, next) => {
       "city": req.body.city,
       "zip": req.body.zip,
       "link": req.body.link,
-      "date": req.body.date,
       "start": req.body.start,
       "end": req.body.end,
       "description": req.body.description,
@@ -69,8 +99,8 @@ router.post('/', (req, res, next) => {
     })
 })
 
-//EDIT event
-router.put('/:id', verifyId, (req, res, next) => {
+// EDIT event
+router.put('/:id', verifyId, verifyUser, (req, res, next) => {
   knex('events')
     .where('id', req.params.id)
     .then((data) => {
@@ -104,7 +134,7 @@ router.put('/:id', verifyId, (req, res, next) => {
 })
 
 // DELETE event
-router.delete('/:id', verifyId, (req, res, next) => {
+router.delete('/:id', verifyId, verifyUser, (req, res, next) => {
   knex('events')
     .where('id', req.params.id)
     .first()

@@ -29,7 +29,7 @@ const verifyBody = (req, res, next) => {
     start,
     end,
     privacy
-  } = req.params
+  } = req.body
   if (!eventName || !platform_id || !host_id || !start || !end || !privacy) {
     let err = new Error()
     err.status = 400

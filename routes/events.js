@@ -116,10 +116,16 @@ router.post('/', verifyBody, (req, res, next) => {
 })
 
 // EDIT event
-router.put('/:id', verifyId, verifyUser, (req, res, next) => {
+router.put('/:id', verifyId, verifyUser, jwtVerify, (req, res, next) => {
   knex('events')
     .where('id', req.params.id)
     .then((data) => {
+      if (req.payload.id !== row.host_id) {
+        let err = new Error()
+        err.status = 401
+        err.message = "You may only edit your own events"
+        return next(err)
+      }
       knex('events')
         .where('id', req.params.id)
         .limit(1)

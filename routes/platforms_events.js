@@ -18,7 +18,7 @@ const verifyId = (req, res, next) => {
   }
 }
 
-//GET ONE platform
+//GET all events for one platform
 router.get('/:id', verifyId, (req, res, next) => {
   knex('events')
     .where('platform_id', req.params.id)

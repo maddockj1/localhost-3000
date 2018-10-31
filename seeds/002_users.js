@@ -8,13 +8,22 @@ exports.seed = function (knex, Promise) {
             username: 'stinkfloyd',
             email: 'nicholas_tzavaras@yahoo.com',
             twitchId: 122662448,
-            // firstName: 'Nick',
-            // lastName: 'Tzavaras',
-            // address: '3700 Hayden Place #2',
-            // city: 'Boulder',
-            // zip: 80301,
-            // birthday: new Date(1985, 12, 25),
-            // favoritePlatform: 9,
+            created_at: new Date(2018, 10, 28, 9, 30, 0, 0),
+            updated_at: new Date(2018, 10, 28, 9, 30, 0, 0)
+          },
+          {
+            id: 2,
+            username: 'soyouthinkyoucandanza',
+            email: 'soyouthinkyoucandanza@yahoo.com',
+            twitchId: 205187429,
+            created_at: new Date(2018, 10, 28, 9, 30, 0, 0),
+            updated_at: new Date(2018, 10, 28, 9, 30, 0, 0)
+          },
+          {
+            id: 3,
+            username: 'thisisthewaywebrawl',
+            email: 'treehouse_nenni@yahoo.com',
+            twitchId: 205165708,
             created_at: new Date(2018, 10, 28, 9, 30, 0, 0),
             updated_at: new Date(2018, 10, 28, 9, 30, 0, 0)
           },

@@ -31,7 +31,7 @@ const twitchStrategy = require('passport-twitch').Strategy;
 passport.use(new twitchStrategy({
   clientID: 'qocfwoezpv67e55q622vcwzi17esta',
   clientSecret: process.env.TWITCH_TOKEN,
-  callbackURL: "/auth/twitch/callback",
+  callbackURL: "https://localhost-9001.herokuapp.com/auth/twitch/callback",
   scope: "user_read"
 }, function (accessToken, refreshToken, profile, done) {
   // need to figure out how to asssess the profile.id to create a user

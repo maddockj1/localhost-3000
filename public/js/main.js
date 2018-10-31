@@ -27,18 +27,24 @@ function populateParallax (arr){
 }
 
 function initParallax(){
-
+  let elems = document.querySelectorAll('.parallax');
+  let instances = M.Parallax.init(elems);
 }
 
 function getEvents() {
   const contentArea = document.getElementById('parallax_container')
+  let headers = document.getElementsByClassName('pHeader')
+  let pDateTime = document.getElementsByClassName('pDateTime')
+  let pdesc = document.getElementsByClassName('pdesc')
   axios.get('http://localhost:3000/events')
     .then((response) => {
       let { data } = response
       buildAndBurnParallax(data)
-      response.data.forEach((event) => {
-
-      })
+      for (let i = 0; i < data.length; i++){
+        headers[i].innerText = data[i].eventName
+        pDateTime[i].innerText = data[i].start
+        pdesc[i].innerText = data[i].description
+      }
     })
   }
 

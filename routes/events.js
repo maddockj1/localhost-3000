@@ -185,10 +185,16 @@ router.delete('/:id', verifyId, jwtVerify, (req, res, next) => {
     .first()
     .then((row) => {
       if (!row) return next()
+      if (!req.payload) {
+        let err = new Error()
+        err.status = 401
+        err.message = "Unauthorized"
+        return next(err)
+      }
       if (req.payload.id !== row.host_id) {
         let err = new Error()
         err.status = 401
-        err.message = "You may only delete your own events"
+        err.message = "Unauthorized"
         return next(err)
       }
       knex('events')

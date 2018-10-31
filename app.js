@@ -71,7 +71,7 @@ app.get("/auth/twitch/callback", passport.authenticate("twitch", {
   let token = jwt.sign(payload, 'thisfuckingsucks')
   // set that jwt to a cookie
   res.cookie("token", token, {
-    maxAge: 900000
+    expires: new Date(Date.now() + 900000)
   })
   // expire the cookie and jwt
   res.redirect("/");

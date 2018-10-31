@@ -17,7 +17,6 @@ exports.up = function (knex, Promise) {
     table.string('description', 255)
     table.integer('playerLimit')
     table.integer('ageLimit')
-    table.boolean('privacy').notNullable()
     table.timestamps(true, true)
   })
 }

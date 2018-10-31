@@ -27,10 +27,9 @@ const verifyBody = (req, res, next) => {
     eventName,
     platform_id,
     start,
-    end,
-    privacy
+    end
   } = req.body
-  if (!eventName || !platform_id || !host_id || !start || !end || !privacy) {
+  if (!eventName || !platform_id || !start || !end) {
     let err = new Error()
     err.status = 400
     err.message = `Bad POST Request`
@@ -106,22 +105,24 @@ router.get('/:id', verifyId, (req, res, next) => {
 
 // CREATE ONE record for this events
 router.post('/', verifyBody, jwtVerify, (req, res, next) => {
+  console.log(req)
+  let newEvent = {
+    "eventName": req.body.eventName,
+    "platform_id": parseInt(req.body.platform_id),
+    "host_id": req.payload.id,
+    "address": req.body.address,
+    "city": req.body.city,
+    "zip": parseInt(req.body.zip),
+    "link": `www.linkandzelda.com`,
+    "start": req.body.start,
+    "end": req.body.end,
+    "description": req.body.description,
+    "playerLimit": parseInt(req.body.playerLimit),
+    "ageLimit": parseInt(req.body.ageLimit)
+  }
+  console.log('NEW EVENT>>>>>', newEvent);
   knex('events')
-    .insert({
-      "eventName": req.body.eventName,
-      "platform_id": req.body.platform_id,
-      "host_id": req.payload.id,
-      "address": req.body.address,
-      "city": req.body.city,
-      "zip": req.body.zip,
-      "link": req.body.link,
-      "start": req.body.start,
-      "end": req.body.end,
-      "description": req.body.description,
-      "playerLimit": req.body.playerLimit,
-      "ageLimit": req.body.ageLimit,
-      "privacy": req.body.privacy
-    })
+    .insert(newEvent)
     .returning('*')
     .then((data) => {
       // addHostToEvent(data)
@@ -166,8 +167,7 @@ router.put('/:id', verifyId, jwtVerify, (req, res, next) => {
           "end": req.body.end,
           "description": req.body.description,
           "playerLimit": req.body.playerLimit,
-          "ageLimit": req.body.ageLimit,
-          "privacy": req.body.privacy
+          "ageLimit": req.body.ageLimit
         })
         .returning('*')
         .then((data) => {

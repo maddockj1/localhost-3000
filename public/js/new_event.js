@@ -20,18 +20,22 @@ function handleFormSubmit() {
         postData[inputName] = formElements[i].value
       }
     }
+    postData.end = `${postData.end}:00.000Z`
+    postData.start = `${postData.start}:00.000Z`
 
     console.log('postData', postData);
 
     // axios.post that data to the correct backend route
-    axios.post('http://localhost:3000/events', postData)
+    axios.post('/events', postData)
     .then((response) => {
+      console.log(`response:`,response);
       // document.getElementById("submit-form").disabled = true
       // let success = document.createElement('p')
       //     success.innerHTML = `Successfully added ${response.data[0].title}.<a href='events.html'>See all events.</a>`
       //     form.appendChild(success)
     })
     .catch((error) => {
+      console.log(`error happened`);
       console.log(error)
     })
   })

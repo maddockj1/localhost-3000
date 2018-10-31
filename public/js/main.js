@@ -22,7 +22,6 @@ function firstVisit() {
 function buildAndBurnParallax(arr) {
   let parCont = document.getElementById('parallax_container')
   parCont.innerHTML = ""
-  counter = 0
   populateParallax(arr)
 }
 // function populates parallax and reinitializes it
@@ -35,7 +34,6 @@ function populateParallax(arr) {
   parCont.innerHTML += templateHead
   for (let i = 0; i < arr.length; i++) {
     parCont.innerHTML += templateBody
-    counter++
   }
   initParallax()
 }

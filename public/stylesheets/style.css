@@ -114,6 +114,13 @@ input.datepicker.pDateTime {
   border-bottom: none;
 }
 
-.toolbar-fixed{
-  
+.toolbar-fixed {
+  position: absolute;
+  bottom: 0px
+}
+
+.toolbar-fixed ul li{
+  padding: 0px;
+  margin: 0px;
+  margin-bottom: 5px;
 }

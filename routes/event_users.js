@@ -17,6 +17,17 @@ const verifyId = (req, res, next) => {
   }
 }
 
+const jwtVerify = (req, res, next) => {
+  jwt.verify(req.cookies.token, process.env.JWT_SECRET, (err, _payload) => {
+    if (err) {
+      return next(err);
+    } else {
+      req.payload = _payload
+      next()
+    }
+  })
+}
+
 const verifyHost = (req, res, next) => {
   // should probably not be able to see a list of attendees unless you are the host? for now just a placeholder
   next()

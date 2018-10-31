@@ -77,7 +77,14 @@ router.get('/:id', verifyId, (req, res, next) => {
     .where('id', req.params.id)
     .first()
     .then((row) => {
-      res.json(row)
+      if (!row) {
+        let err = new Error()
+        err.status = 404
+        err.message = "Event not found"
+        return next(err)
+      } else {
+        res.json(row)
+      }
     })
     .catch((err) => {
       next(err)
@@ -117,6 +124,12 @@ router.put('/:id', verifyId, jwtVerify, (req, res, next) => {
     .where('id', req.params.id)
     .first()
     .then((row) => {
+      if (!row) {
+        let err = new Error()
+        err.status = 404
+        err.message = "Event not found"
+        return next(err)
+      }
       if (req.payload.id !== row.host_id) {
         let err = new Error()
         err.status = 401

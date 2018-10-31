@@ -55,14 +55,6 @@ a {
   width: auto;
 }
 
-/* #movBackground {
-  position: absolute;
-  z-index: -1;
-  width: inherit;
-  height: inherit;
-
-} */
-
 .parallax-container {
   max-height: 200px;
 }

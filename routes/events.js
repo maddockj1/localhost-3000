@@ -26,12 +26,10 @@ const verifyBody = (req, res, next) => {
   let {
     eventName,
     platform_id,
-    host_id,
     start,
-    end,
-    privacy
+    end
   } = req.body
-  if (!eventName || !platform_id || !host_id || !start || !end || !privacy) {
+  if (!eventName || !platform_id || !start || !end) {
     let err = new Error()
     err.status = 400
     err.message = `Bad POST Request`
@@ -44,6 +42,8 @@ const verifyBody = (req, res, next) => {
 const jwtVerify = (req, res, next) => {
   jwt.verify(req.cookies.token, process.env.JWT_SECRET, (err, _payload) => {
     if (err) {
+      err.status = 401
+      err.message = 'Unauthorized'
       return next(err);
     } else {
       req.payload = _payload
@@ -105,22 +105,24 @@ router.get('/:id', verifyId, (req, res, next) => {
 
 // CREATE ONE record for this events
 router.post('/', verifyBody, jwtVerify, (req, res, next) => {
+  console.log(req)
+  let newEvent = {
+    "eventName": req.body.eventName,
+    "platform_id": parseInt(req.body.platform_id),
+    "host_id": req.payload.id,
+    "address": req.body.address,
+    "city": req.body.city,
+    "zip": parseInt(req.body.zip),
+    "link": `www.linkandzelda.com`,
+    "start": req.body.start,
+    "end": req.body.end,
+    "description": req.body.description,
+    "playerLimit": parseInt(req.body.playerLimit),
+    "ageLimit": parseInt(req.body.ageLimit)
+  }
+  console.log('NEW EVENT>>>>>', newEvent);
   knex('events')
-    .insert({
-      "eventName": req.body.eventName,
-      "platform_id": req.body.platform_id,
-      "host_id": req.body.host_id,
-      "address": req.body.address,
-      "city": req.body.city,
-      "zip": req.body.zip,
-      "link": req.body.link,
-      "start": req.body.start,
-      "end": req.body.end,
-      "description": req.body.description,
-      "playerLimit": req.body.playerLimit,
-      "ageLimit": req.body.ageLimit,
-      "privacy": req.body.privacy
-    })
+    .insert(newEvent)
     .returning('*')
     .then((data) => {
       // addHostToEvent(data)
@@ -165,8 +167,7 @@ router.put('/:id', verifyId, jwtVerify, (req, res, next) => {
           "end": req.body.end,
           "description": req.body.description,
           "playerLimit": req.body.playerLimit,
-          "ageLimit": req.body.ageLimit,
-          "privacy": req.body.privacy
+          "ageLimit": req.body.ageLimit
         })
         .returning('*')
         .then((data) => {
@@ -185,10 +186,16 @@ router.delete('/:id', verifyId, jwtVerify, (req, res, next) => {
     .first()
     .then((row) => {
       if (!row) return next()
+      if (!req.payload) {
+        let err = new Error()
+        err.status = 401
+        err.message = "Unauthorized"
+        return next(err)
+      }
       if (req.payload.id !== row.host_id) {
         let err = new Error()
         err.status = 401
-        err.message = "You may only delete your own events"
+        err.message = "Unauthorized"
         return next(err)
       }
       knex('events')

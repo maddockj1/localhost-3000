@@ -20,15 +20,9 @@ const verifyId = (req, res, next) => {
 
 const verifyPost = (req, res, next) => {
   let {
-    user_id,
     event_id
   } = req.params
-  if (isNaN(user_id)) {
-    let err = new Error()
-    err.status = 401
-    err.message = `Not a valid User ID`
-    next(err)
-  } else if (isNaN(event_id)) {
+  if (isNaN(event_id)) {
     let err = new Error()
     err.status = 401
     err.message = `Not a valid Event ID`
@@ -49,17 +43,11 @@ const jwtVerify = (req, res, next) => {
   })
 }
 
-router.post('/:event_id/:user_id', verifyPost, jwtVerify, (req, res, next) => {
-  if (req.payload.id !== req.params.id) {
-    let err = new Error()
-    err.status = 401
-    err.message = "Unauthorized"
-    next(err)
-  }
+router.post('/:event_id', verifyPost, jwtVerify, (req, res, next) => {
   knex(`events_users`)
     .where({
       events_id: parseInt(req.params.event_id),
-      users_id: parseInt(req.params.user_id)
+      users_id: parseInt(req.payload.id)
     })
     .first()
     .then((row) => {

@@ -61,7 +61,7 @@ router.post('/:event_id', verifyPost, jwtVerify, (req, res, next) => {
         knex('events_users')
           .insert({
             events_id: parseInt(req.params.event_id),
-            users_id: parseInt(req.params.user_id)
+            users_id: parseInt(req.payload.id)
           })
           .returning('*')
           .then((data) => {

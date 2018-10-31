@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
   console.log('Connected to Main.js')
   getEvents()
+
+
 })
 
 // /* TESTING VARIABLES */
@@ -47,7 +49,22 @@ document.addEventListener('DOMContentLoaded', () => {
 // //   }
 // //   initParallax()
 // // }
-
+//delete this if the other works
+// function joinEvent() {
+//   let editButton = document.getElementById('join')
+//   //console.log(editButton)
+//   editButton.addEventListener('click', (ev) => {
+//     let eventId = ev.target.getAttribute('data-id')
+//     console.log(eventId)
+//     axios.post(`user_events/${eventId}`)
+//       .then((response) => {
+//         console.log(response)
+//       })
+//       .catch((err) => {
+//         console.log(err)
+//       })
+//   })
+// }
 function getEvents() {
   const contentArea = document.getElementById('parallax_container')
   axios.get('http://localhost:3000/events')
@@ -66,7 +83,7 @@ function getEvents() {
       eventName.innerText = event.eventName
       description.innerText = event.description
       deleteButton.innerText =  'Delete'
-      editButton.innerText = `Edit`
+      editButton.innerText = `Join Bitch`
 
       deleteButton.setAttribute('data-id', event.id)
       deleteButton.setAttribute('host-id', event.host_id)
@@ -74,7 +91,8 @@ function getEvents() {
 
       editButton.setAttribute('data-id', event.id)
       editButton.setAttribute('class', 'waves-effect waves-light btn')
-
+      editButton.setAttribute('id', 'join')
+      //console.log(response.data);
       deleteButton.addEventListener('click', (ev) => {
         let eventId = ev.target.getAttribute('data-id')
         // DELETE THIS RECORD!
@@ -84,6 +102,17 @@ function getEvents() {
         })
         .catch((err) => {
           //console.log(err)
+        })
+      })
+      editButton.addEventListener('click', (ev) => {
+        let eventId = ev.target.getAttribute('data-id')
+      console.log(eventId);
+        axios.post(`/user_events/${eventId}`)
+        .then((response) => {
+          console.log(response)
+        })
+        .catch((err) => {
+          console.log(err)
         })
       })
 
@@ -96,8 +125,10 @@ function getEvents() {
       edit_td.appendChild(editButton)
       tbody.appendChild(tr)
 
+
       })
     })
+
   }
 
 // fill titles

@@ -66,7 +66,7 @@ app.get("/auth/twitch/callback", passport.authenticate("twitch", {
 }), function (req, res) {
   // Successful authentication, redirect home.
   //set something i can use EVERYWHERE
-  console.log(req.user);
+  console.log(`req: `, req.user);
   // set req.user.id to jwt
   let payload = {
     id: req.user.id,

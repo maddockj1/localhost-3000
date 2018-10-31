@@ -66,13 +66,13 @@ app.get("/auth/twitch/callback", passport.authenticate("twitch", {
 }), function (req, res) {
   // Successful authentication, redirect home.
   //set something i can use EVERYWHERE
-  console.log(req.user);
   // set req.user.id to jwt
   let payload = {
     id: req.user.id,
     loggedIn: true
   }
-  let token = jwt.sign(payload, process.env.JWT_SECRET)
+  console.log(`payload:`, payload);
+  let token = jwt.sign(payload, process.env.JWT_KEY)
   // set that jwt to a cookie
   res.cookie("token", token, {
     expires: new Date(Date.now() + 900000)

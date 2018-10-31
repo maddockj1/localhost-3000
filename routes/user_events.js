@@ -33,7 +33,7 @@ const verifyPost = (req, res, next) => {
 }
 
 const jwtVerify = (req, res, next) => {
-  jwt.verify(req.cookies.token, process.env.JWT_SECRET, (err, _payload) => {
+  jwt.verify(req.cookies.token, process.env.JWT_KEY, (err, _payload) => {
     if (err) {
       return next(err);
     } else {
@@ -61,7 +61,7 @@ router.post('/:event_id', verifyPost, jwtVerify, (req, res, next) => {
         knex('events_users')
           .insert({
             events_id: parseInt(req.params.event_id),
-            users_id: parseInt(req.params.user_id)
+            users_id: parseInt(req.payload.id)
           })
           .returning('*')
           .then((data) => {

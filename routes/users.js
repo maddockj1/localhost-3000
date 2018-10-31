@@ -39,7 +39,7 @@ const verifyId = (req, res, next) => {
 
 const jwtVerify = (req, res, next) => {
 
-  jwt.verify(req.cookies.token, process.env.JWT_SECRET, (err, _payload) => {
+  jwt.verify(req.cookies.token, process.env.JWT_KEY, (err, _payload) => {
     if (err) {
       err.status = 401
       err.message = `Unauthorized`

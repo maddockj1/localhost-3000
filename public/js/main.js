@@ -67,69 +67,69 @@ document.addEventListener('DOMContentLoaded', () => {
 // }
 function getEvents() {
   const contentArea = document.getElementById('parallax_container')
-  axios.get('http://localhost:3000/events')
+  axios.get('/events')
     .then((response) => {
       response.data.forEach((event) => {
 
-      let tbody = document.querySelector('#list-movies tbody')
-      let tr = document.createElement('tr')
-      let eventName = document.createElement('td')
-      let description = document.createElement('td')
-      let del_td = document.createElement('td')
-      let deleteButton = document.createElement('button')
-      let edit_td= document.createElement('td')
-      let editButton = document.createElement('button')
+        let tbody = document.querySelector('#list-movies tbody')
+        let tr = document.createElement('tr')
+        let eventName = document.createElement('td')
+        let description = document.createElement('td')
+        let del_td = document.createElement('td')
+        let deleteButton = document.createElement('button')
+        let edit_td = document.createElement('td')
+        let editButton = document.createElement('button')
 
-      eventName.innerText = event.eventName
-      description.innerText = event.description
-      deleteButton.innerText =  'Delete'
-      editButton.innerText = `Join Bitch`
+        eventName.innerText = event.eventName
+        description.innerText = event.description
+        deleteButton.innerText = 'Delete'
+        editButton.innerText = `Join Bitch`
 
-      deleteButton.setAttribute('data-id', event.id)
-      deleteButton.setAttribute('host-id', event.host_id)
-      deleteButton.setAttribute('class', 'waves-effect waves-light btn')
+        deleteButton.setAttribute('data-id', event.id)
+        deleteButton.setAttribute('host-id', event.host_id)
+        deleteButton.setAttribute('class', 'waves-effect waves-light btn')
 
-      editButton.setAttribute('data-id', event.id)
-      editButton.setAttribute('class', 'waves-effect waves-light btn')
-      editButton.setAttribute('id', 'join')
-      //console.log(response.data);
-      deleteButton.addEventListener('click', (ev) => {
-        let eventId = ev.target.getAttribute('data-id')
-        // DELETE THIS RECORD!
-        axios.delete(`/events/${eventId}`)
-        .then((response) => {
-          del_td.parentElement.remove()
+        editButton.setAttribute('data-id', event.id)
+        editButton.setAttribute('class', 'waves-effect waves-light btn')
+        editButton.setAttribute('id', 'join')
+        //console.log(response.data);
+        deleteButton.addEventListener('click', (ev) => {
+          let eventId = ev.target.getAttribute('data-id')
+          // DELETE THIS RECORD!
+          axios.delete(`/events/${eventId}`)
+            .then((response) => {
+              del_td.parentElement.remove()
+            })
+            .catch((err) => {
+              //console.log(err)
+            })
         })
-        .catch((err) => {
-          //console.log(err)
+        editButton.addEventListener('click', (ev) => {
+          let eventId = ev.target.getAttribute('data-id')
+          console.log(eventId);
+          axios.post(`/user_events/${eventId}`)
+            .then((response) => {
+              console.log(response)
+            })
+            .catch((err) => {
+              console.log(err)
+            })
         })
-      })
-      editButton.addEventListener('click', (ev) => {
-        let eventId = ev.target.getAttribute('data-id')
-      console.log(eventId);
-        axios.post(`/user_events/${eventId}`)
-        .then((response) => {
-          console.log(response)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-      })
 
-      //Append to page
-      tr.appendChild(eventName)
-      tr.appendChild(description)
-      tr.appendChild(del_td)
-      del_td.appendChild(deleteButton)
-      tr.appendChild(edit_td)
-      edit_td.appendChild(editButton)
-      tbody.appendChild(tr)
+        //Append to page
+        tr.appendChild(eventName)
+        tr.appendChild(description)
+        tr.appendChild(del_td)
+        del_td.appendChild(deleteButton)
+        tr.appendChild(edit_td)
+        edit_td.appendChild(editButton)
+        tbody.appendChild(tr)
 
 
       })
     })
 
-  }
+}
 
 // fill titles
 // fill description

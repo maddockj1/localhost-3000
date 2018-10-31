@@ -16,7 +16,7 @@ function populateParallax (arr){
   console.log("populateParallax")
   let templateHead = `<div class="parallax-container"><div class="parallax"><img src="https://g.foolcdn.com/editorial/images/453677/mans-hands-holding-a-video-game-controller.jpg"></div></div>`
 
-  let templateBody = `<div class="section white"><div class="row container"><h2 class="header pHeader">Event Title</h2><p class="grey-text text-darken-3 lighten-3 pPlat">Platform</p><p class="grey-text text-darken-3 lighten-3 pDateTime">Parallax is an effect where the background content or image in this case, is moved at a different speed than the foreground content while scrolling.</p>    <br><p class="grey-text text-darken-3 lighten-3 pdesc">Parallax is an effect where the background content or image in this case, is moved at a different speed than the foreground content while scrolling.</p></div><div class="row container"><div class="col s10 m10 l10"></div><div class="col s2 m2 l2"><a class="waves-effect waves-light btn"><i class="material-icons right">cloud</i>button</a></div> </div></div><div class="parallax-container"><div class="parallax"><img src="https://g.foolcdn.com/editorial/images/453677/mans-hands-holding-a-video-game-controller.jpg"></div></div>`
+  let templateBody = `<div class="section white"><div class="row container"><h2 class="header pHeader">Event Title</h2><div class="row"><div class="col s12 m12 l12"><span>Description:</span><p class="grey-text text-darken-3 lighten-3 pdesc"></p></div></div><div class="row"><div class="col s5 m5 l5"><span>Date and Time:</span><input type="datetime-local" class="datepicker pDateTime" disabled></div><div class="col s6 m6 l6"><span>Platform:</span><br><p class="grey-text text-darken-3 lighten-3 pPlat"></p></div></div></div><div class="row container-wrapper"><div class="col s8 m8 l8"></div><div class="col s2 m2 l2"><a class="waves-effect waves-light btn pEdit"><i class="material-icons right">edit</i>Edit</a></div><div class="col s2 m2 l2"><a class="waves-effect waves-light btn pDelete"><i class="material-icons right">delete</i>Delete</a></div></div></div><div class="parallax-container"><div class="parallax"><img src="https://g.foolcdn.com/editorial/images/453677/mans-hands-holding-a-video-game-controller.jpg"></div></div>`
   let parCont = document.getElementById('parallax_container')
   parCont.innerHTML += templateHead
   for(let i = 0; i < arr.length; i++){
@@ -36,13 +36,20 @@ function getEvents() {
   let headers = document.getElementsByClassName('pHeader')
   let pDateTime = document.getElementsByClassName('pDateTime')
   let pdesc = document.getElementsByClassName('pdesc')
+  let pPlat = document.getElementsByClassName('pPlat')
   axios.get('http://localhost:3000/events')
     .then((response) => {
       let { data } = response
+      let platform = []
       buildAndBurnParallax(data)
       for (let i = 0; i < data.length; i++){
+        axios.get(`http://localhost:3000/platforms/${data[i].platform_id}`)
+        .then((response) => {
+          pPlat[i].innerText = response.data.platform
+        })
+        console.log(platform)
         headers[i].innerText = data[i].eventName
-        pDateTime[i].innerText = data[i].start
+        pDateTime[i].value = data[i].start.slice(0,16)
         pdesc[i].innerText = data[i].description
       }
     })

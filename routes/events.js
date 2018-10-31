@@ -89,7 +89,7 @@ router.get('/:id', verifyId, (req, res, next) => {
 })
 
 // CREATE ONE record for this events
-router.post('/', verifyBody, (req, res, next) => {
+router.post('/', verifyBody, jwtVerify, (req, res, next) => {
   knex('events')
     .insert({
       "eventName": req.body.eventName,
@@ -162,7 +162,6 @@ router.delete('/:id', verifyId, verifyUser, jwtVerify, (req, res, next) => {
     .where('id', req.params.id)
     .first()
     .then((row) => {
-      console.log(row);
       if (!row) return next()
       if (req.payload.id !== row.host_id) {
         let err = new Error()

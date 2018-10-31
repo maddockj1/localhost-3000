@@ -119,7 +119,8 @@ router.post('/', verifyBody, (req, res, next) => {
 router.put('/:id', verifyId, verifyUser, jwtVerify, (req, res, next) => {
   knex('events')
     .where('id', req.params.id)
-    .then((data) => {
+    .first()
+    .then((row) => {
       if (req.payload.id !== row.host_id) {
         let err = new Error()
         err.status = 401

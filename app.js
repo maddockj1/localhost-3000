@@ -72,6 +72,7 @@ app.get("/auth/twitch/callback", passport.authenticate("twitch", {
     id: req.user.id,
     loggedIn: true
   }
+  console.log(`payload:`, payload);
   let token = jwt.sign(payload, process.env.JWT_SECRET)
   // set that jwt to a cookie
   res.cookie("token", token, {

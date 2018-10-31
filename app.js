@@ -5,6 +5,10 @@ var logger = require('morgan');
 let knex = require(`./knex`);
 let jwt = require('jsonwebtoken')
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').load();
+}
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -26,7 +30,7 @@ const twitchStrategy = require('passport-twitch').Strategy;
 //auth secrects/ids and function when it happens.
 passport.use(new twitchStrategy({
   clientID: 'qocfwoezpv67e55q622vcwzi17esta',
-  clientSecret: 'tstttnp86ibb70ks4vw1ewxj1nmzdp',
+  clientSecret: process.env.TWITCH_TOKEN,
   callbackURL: "/auth/twitch/callback",
   scope: "user_read"
 }, function (accessToken, refreshToken, profile, done) {
@@ -68,7 +72,7 @@ app.get("/auth/twitch/callback", passport.authenticate("twitch", {
     id: req.user.id,
     loggedIn: true
   }
-  let token = jwt.sign(payload, 'thisfuckingsucks')
+  let token = jwt.sign(payload, process.env.JWT_SECRET)
   // set that jwt to a cookie
   res.cookie("token", token, {
     expires: new Date(Date.now() + 900000)

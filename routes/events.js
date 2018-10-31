@@ -42,7 +42,7 @@ const verifyBody = (req, res, next) => {
 }
 
 const jwtVerify = (req, res, next) => {
-  jwt.verify(req.cookies.token, "thisfuckingsucks", (err, _payload) => {
+  jwt.verify(req.cookies.token, process.env.JWT_SECRET, (err, _payload) => {
     if (err) {
       return next(err);
     } else {
@@ -50,11 +50,6 @@ const jwtVerify = (req, res, next) => {
       next()
     }
   })
-}
-
-const verifyUser = (req, res, next) => {
-  // This needs to make sure the user trying to delete the event is the user who is hosting the event. For now its just a placeholder.
-  next()
 }
 
 const checkForDuplicateEvents = (req, res, next) => {
@@ -79,7 +74,8 @@ router.get('/', (req, res, next) => {
 // READ ONE record for this events
 router.get('/:id', verifyId, (req, res, next) => {
   knex('events')
-    .where('id', req.params.id).first()
+    .where('id', req.params.id)
+    .first()
     .then((row) => {
       res.json(row)
     })
@@ -116,7 +112,7 @@ router.post('/', verifyBody, jwtVerify, (req, res, next) => {
 })
 
 // EDIT event
-router.put('/:id', verifyId, verifyUser, jwtVerify, (req, res, next) => {
+router.put('/:id', verifyId, jwtVerify, (req, res, next) => {
   knex('events')
     .where('id', req.params.id)
     .first()
@@ -157,7 +153,7 @@ router.put('/:id', verifyId, verifyUser, jwtVerify, (req, res, next) => {
 })
 
 // DELETE event
-router.delete('/:id', verifyId, verifyUser, jwtVerify, (req, res, next) => {
+router.delete('/:id', verifyId, jwtVerify, (req, res, next) => {
   knex('events')
     .where('id', req.params.id)
     .first()

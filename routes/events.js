@@ -63,7 +63,7 @@ const checkForDuplicateEvents = (req, res, next) => {
 }
 
 // READ ALL records for events
-router.get('/', jwtVerify, (req, res, next) => {
+router.get('/', (req, res, next) => {
   knex('events')
     .then((rows) => {
       res.json(rows)

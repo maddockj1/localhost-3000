@@ -38,12 +38,14 @@ const verifyId = (req, res, next) => {
 // }
 
 const jwtVerify = (req, res, next) => {
+
   jwt.verify(req.cookies.token, process.env.JWT_SECRET, (err, _payload) => {
     if (err) {
       err.status = 401
       err.message = `Unauthorized`
       return next(err);
     } else {
+      req.payload = _payload
       next()
     }
   })
@@ -63,7 +65,7 @@ const jwtVerify = (req, res, next) => {
 
 // GET ONE user
 router.get('/:id', verifyId, jwtVerify, (req, res, next) => {
-  if (req.payload.id !== req.params.id) {
+  if (req.payload.id != req.params.id) {
     let err = new Error()
     err.status = 401
     err.message = "Unauthorized"

@@ -26,7 +26,6 @@ const verifyBody = (req, res, next) => {
   let {
     eventName,
     platform_id,
-    host_id,
     start,
     end,
     privacy
@@ -111,7 +110,7 @@ router.post('/', verifyBody, jwtVerify, (req, res, next) => {
     .insert({
       "eventName": req.body.eventName,
       "platform_id": req.body.platform_id,
-      "host_id": req.body.host_id,
+      "host_id": req.payload.id,
       "address": req.body.address,
       "city": req.body.city,
       "zip": req.body.zip,

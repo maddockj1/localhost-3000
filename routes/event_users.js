@@ -40,7 +40,7 @@ router.get(`/`, (req, res, next) => {
   next(err)
 })
 
-//GET ALL USERS FOR ONE event
+// GET ALL USERS FOR ONE event
 router.get('/:id', verifyId, verifyHost, (req, res, next) => {
   knex('events_users')
     .where('events_id', req.params.id)

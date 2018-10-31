@@ -57,6 +57,18 @@ const checkForDuplicateEvents = (req, res, next) => {
   next()
 }
 
+const addHostToEvent = (data) => {
+  knex('events_users')
+    .insert({
+      events_id: data.event_id,
+      users_id: data.user_id
+    })
+    .returning('*')
+    .catch((err) => {
+      next(err)
+    })
+}
+
 // READ ALL records for events
 router.get('/', (req, res, next) => {
   knex('events')
@@ -111,6 +123,7 @@ router.post('/', verifyBody, jwtVerify, (req, res, next) => {
     })
     .returning('*')
     .then((data) => {
+      // addHostToEvent(data)
       res.json(data[0])
     })
     .catch((err) => {

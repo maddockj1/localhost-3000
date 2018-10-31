@@ -108,3 +108,8 @@ div h3 {
 #username {
   font-family: 'Wallpoet', cursive;
 }
+
+input.datepicker.pDateTime {
+  color: black;
+  border-bottom: none;
+}

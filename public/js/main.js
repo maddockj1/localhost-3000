@@ -9,10 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
   getPlatforms()
   popSel()
 
-  // let form = document.getElementById('form')
-  // form.addEventListener('onsubmit', function(){
-  //
-  // })
+  let form = document.getElementById('form')
+  form.addEventListener('onsubmit', function(e){
+  e.preventDefault()
+
+  })
 })
 
 //first time visit
@@ -142,10 +143,7 @@ function logout() {
 
 // populate platform select
 function popSel() {
-  document.getElementById("submit").addEventListener("click", function(event) {
-    event.preventDefault()
-    postFormData()
-  });
+  
   let select = document.getElementById('platform_id')
   select.innerHTML = "<option disabled selected>Platform by Manufacturer</option>"
   for (let key in platforms) {

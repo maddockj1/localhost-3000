@@ -74,7 +74,7 @@ instead of a search field, open a sidebar from the right.
   <div id="modal2" class="modal">
     <div class="modal-content">
       <div class="container">
-        <form id="form" @submit.prevent="submit">
+        <form id="form">
           <label for="eventName">Event Title</label>
           <input type="text" name="eventName" required>
           <label for="address">Street Address</label>
@@ -99,10 +99,11 @@ instead of a search field, open a sidebar from the right.
           <select id="platform_id" name="platform_id" required>
             <!-- dynamically fill then reinitialize -->
           </select>
+          <label for="submit">Submit</label>
+          <button id="submit" name="submit">Submit</button>
         </form>
         <div style="float:right">
-          <label for="submit">Submit</label>
-          <button id="submit">Submit</button>
+
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 const platforms = {}
+const toggle = 0
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('Connected to Main.js')
@@ -158,7 +159,7 @@ function popSel() {
 }
 
 function popSel2(id) {
-  if (id !== parseJwt()){
+  if (id !== parseJwt()) {
     return alert("You are not authorized to edit this")
   }
   document.getElementById("submit").addEventListener("click", function(event) {
@@ -211,7 +212,19 @@ function getFormData() {
   return data
 }
 
+//patch-fix
+function counter(num){
+  if(num === 0){
+    num++
+    return true
+  }else{
+    num = 0
+    return false
+  }
+}
+
 function postFormData() {
+  if(counter()){}else{return}
   let data = getFormData()
   axios.post(`http://localhost:3000/events/`, data)
     .then(res => {
@@ -219,7 +232,7 @@ function postFormData() {
       console.log(res.data);
       getEvents()
     })
-    toggleM2(false)
+  toggleM2(false)
 }
 
 
@@ -228,24 +241,24 @@ function patchFormData() {
   console.log('patch')
 }
 
-function delThisEntry (id) {
+function delThisEntry(id) {
   axios.delete(`http://localhost:3000/events/${id}`)
-  .then(res => {
-    console.log(res);
-    console.log(res.data);
-    getEvents()
-  })
+    .then(res => {
+      console.log(res);
+      console.log(res.data);
+      getEvents()
+    })
 
 }
 
-function toggleM2 (bool) {
-  if (bool !== true && bool !== false){
+function toggleM2(bool) {
+  if (bool !== true && bool !== false) {
     alert("o.o what are you doing?")
   }
   let instance = M.Modal.getInstance(modal2);
-  if (bool){
+  if (bool) {
     instance.open()
-  }else{
+  } else {
     instance.close()
   }
 }

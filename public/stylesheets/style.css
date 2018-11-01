@@ -27,7 +27,11 @@ a {
   -webkit-text-fill-color: transparent;
   padding-right: 5px;
   padding-bottom: 20px;
+  -webkit-text-stroke: 1px black;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
 #headerBarRow{
   margin-bottom: 0px;
 }
@@ -114,13 +118,37 @@ input.datepicker.pDateTime {
   border-bottom: none;
 }
 
-.toolbar-fixed {
-  position: absolute;
-  bottom: 0px
+h5.logo {
+  font-family: 'Audiowide', cursive;
 }
 
-.toolbar-fixed ul li{
-  padding: 0px;
-  margin: 0px;
-  margin-bottom: 5px;
+div.col p {
+  font-family: 'Kavivanar', cursive;
+  color: #E5E4E2;
+  font-size: 25px;
+}
+
+.twitch-btn {
+  color:blue;
+}
+
+.grey-text.text-darken-3 {
+    color: #424242 !important;
+    margin: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+p span.logo {
+  font-size: 30px
+}
+
+h5.logo span {
+  font-size: 30px;
+}
+
+a.btn-floating {
+  background-image: url(../img/index/btn-background-stainless-steel-seamless.jpg);
+  background-color: null;
+  color: black;
 }

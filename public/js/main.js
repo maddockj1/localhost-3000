@@ -1,8 +1,11 @@
+const platform = {}
+
 document.addEventListener('DOMContentLoaded', () => {
   console.log('Connected to Main.js')
   getEvents()
   M.AutoInit();
   firstVisit()
+  getPlatforms()
 })
 
 //first time visit
@@ -17,6 +20,20 @@ function firstVisit() {
     btn.innerHTML = `<a href="#" data-target="slide-out" class="waves-effect waves-light btn sidenav-trigger"><i class="material-icons left">account_box</i>Profile</a>`
   }
 }
+// get and organize platforms
+function getPlatforms () {
+  axios.get(`http://localhost:3000/platforms/`)
+    .then((response) => {
+      let { data } = response
+      data.forEach((element) =>{
+        if (!platform[element.company]){
+          platform[element.company] = [{id:element.id,platform:element.platform}]
+        }else{
+          platform[element.company].push({id:element.id,platform:element.platform})
+        }
+      })
+    })
+}
 
 // function clears parallax and repopulates
 function buildAndBurnParallax(arr) {
@@ -29,7 +46,7 @@ function populateParallax(arr) {
   console.log("populateParallax")
   let templateHead = `<div class="parallax-container"><div class="parallax"><img src="https://g.foolcdn.com/editorial/images/453677/mans-hands-holding-a-video-game-controller.jpg"></div></div>`
 
-  let templateBody = `<div class="section white"><div class="row container"><h3 class="header pHeader">Event Title</h3><div class="row"><div class="col s12 m12 l12"><span>Description:</span><p class="grey-text text-darken-3 lighten-3 pdesc"></p></div></div><div class="row"><div class="col s5 m5 l5"><span>Date and Time:</span><input type="datetime-local" class="datepicker pDateTime" disabled></div><div class="col s6 m6 l6"><span>Platform:</span><br><p class="grey-text text-darken-3 lighten-3 pPlat"></p></div></div></div><div class="row container-wrapper"><div class="col s8 m8 l8"></div><div class="col s2 m2 l2"><a class="waves-effect waves-light btn pEdit"><i class="material-icons right">edit</i>Edit</a></div><div class="col s2 m2 l2"><a class="waves-effect waves-light btn pDelete"><i class="material-icons right">delete</i>Delete</a></div></div></div><div class="parallax-container"><div class="parallax"><img src="https://g.foolcdn.com/editorial/images/453677/mans-hands-holding-a-video-game-controller.jpg"></div></div>`
+  let templateBody = `<div class="section white"><div class="row container"><h2 class="header pHeader">Event Title</h2><div class="row"><div class="col s12 m12 l12"><span>Description:</span><p class="grey-text text-darken-3 lighten-3 pdesc"></p></div></div><div class="row"><div class="col s6 m6 l6"><span>Date and Time:</span><input id="datepicker" type="datetime-local" class="datepicker pDateTime" disabled></div><div class="col s6 m6 l6"><span>Platform:</span><br><p class="grey-text text-darken-3 lighten-3 pPlat"></p></div></div></div><div class="row container-wrapper"><div class="col s6 m6 l6"></div><div class="col s2 m2 l2 center-align"><a class="waves-effect waves-light btn pEdit"><i class="material-icons right">edit</i>Edit</a></div><div class="col s2 m2 l2 center-align"><a class="waves-effect waves-light btn pDelete"><i class="material-icons right">delete</i>Delete</a></div><div class="col s2 m2 l2 center-align"><a class="waves-effect waves-light btn pAttend"><i class="material-icons right">person_add</i>Attend</a></div></div></div><div class="parallax-container"><div class="parallax"><img src="https://g.foolcdn.com/editorial/images/453677/mans-hands-holding-a-video-game-controller.jpg"></div></div>`
   let parCont = document.getElementById('parallax_container')
   parCont.innerHTML += templateHead
   for (let i = 0; i < arr.length; i++) {
@@ -38,9 +55,15 @@ function populateParallax(arr) {
   initParallax()
 }
 
+// materialize can be finicky about initialization. call these after dynamically populating them
 function initParallax() {
   let elems = document.querySelectorAll('.parallax');
   let instances = M.Parallax.init(elems);
+}
+
+function initCollapsible() {
+  let elems = document.querySelectorAll('.collapsible');
+  let instances = M.Collapsible.init(elems);
 }
 
 function getEvents() {
@@ -83,6 +106,14 @@ function parseJwt() {
   let base64 = base64Url.replace('-', '+').replace('_', '/');
   return JSON.parse(window.atob(base64)).id;
 };
+
+// logout (sorta)
+//
+function logout() {
+    document.cookie = 'token'+'=; Max-Age=-99999999;'
+    window.location = ""; // TO REFRESH THE PAGE
+}
+
 // original getEvents()
 
 // function getEvents() {

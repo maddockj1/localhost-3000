@@ -1,4 +1,4 @@
-// console.log('Connected to new_event.js');
+console.log('Connected to Edit_event.js');
 document.addEventListener('DOMContentLoaded', () => {
   handleFormSubmit()
 })
@@ -26,7 +26,7 @@ function handleFormSubmit() {
     console.log('postData', postData);
 
     // axios.post that data to the correct backend route
-    axios.post('/events', postData)
+    axios.put('/events/6', postData)
     .then((response) => {
       console.log(`response:`,response);
       // document.getElementById("submit-form").disabled = true

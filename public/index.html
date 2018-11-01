@@ -1,15 +1,10 @@
-<!--
-Additional features:
-instead of a search field, open a sidebar from the right.
--->
 <!DOCTYPE html>
 <html>
 
 <head>
-  <title>localhost9001</title>
-  <link rel="icon" href="https://static.twitchcdn.net/assets/favicon-75270f9df2b07174c23c.ico">
+  <title>localhost3000</title>
   <!--Import Google Fonts-->
-  <link href="https://fonts.googleapis.com/css?family=Libre+Barcode+128+Text|Wallpoet|Audiowide|Kavivanar" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Libre+Barcode+128+Text|Wallpoet" rel="stylesheet">
   <!--Import Google Icon Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!--Import materialize.css-->
@@ -23,89 +18,15 @@ instead of a search field, open a sidebar from the right.
 </head>
 
 <body>
-  <!-- FAB -->
-  <div class="fixed-action-btn">
-    <a class="btn-floating btn-large red">
-      <i class="large material-icons">mode_edit</i>
-    </a>
-    <ul>
-      <li><a class="btn-floating red" onclick="logout()"><i class="material-icons">clear</i></a></li>
-      <li><a data-target="slide-out" class="btn-floating yellow darken-1 sidenav-trigger"><i class="material-icons">list</i></a></li>
-      <li><a data-target="modal2" class="btn-floating green modal-trigger" onclick="popSel()"><i class="material-icons">fiber_new</i></a></li>
-    </ul>
-  </div>
-
   <!-- modals -->
   <!-- first_time_m -->
   <div id="modal1" class="modal">
     <div class="modal-content">
-      <div class="container-wrapper">
-        <div class="row">
-          <div class="col s12 m12 l12">
-            <h1 class="logo center-align"><span>//</span>localhost:9001</h1>
-          </div>
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="row">
-          <div class="col s12 m12 l12">
-            <h5 class="logo center-align">We'll help you take your parties over <span>9000</span></h5>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col s12 m12 l12">
-          <p>Welcome to <span class="logo">//localhost:9001</span></p>
-          <p>Feel free to peruse our users' events at your leisure. We hope that you will join our community and add your passion for gaming to our site and that this tool leads to many new, fruitful friendships!</p>
-          <p>If you do decide to join us, we have optimized our system to allow you to securely and quickly sign in using your Twitch.tv account or to create an account if you don't yet have your own Twitch account. Once signed in, you can choose to
-            attend events or even host your own! Just tap your profile button at the top to get started! We look forward to the excitement you'll bring to everyone around you.</p>
-        </div>
-      </div>
-      <div class="row valign-wrapper">
-        <div class="col s12 m12 l12 center-align valign">
-          <a onclick="location.href = '/auth/twitch';" class="waves-effect waves-light btn twitch-btn"><i class="material-icons left">account_box</i>Login via Twitch</a>
-        </div>
-      </div>
+      <h4>Modal Header</h4>
+      <p>A bunch of text</p>
     </div>
-  </div>
-
-  <!-- modal for creation and editing of events -->
-  <div id="modal2" class="modal">
-    <div class="modal-content">
-      <div class="container">
-        <form id="form">
-          <label for="eventName">Event Title</label>
-          <input type="text" name="eventName" required>
-          <label for="address">Street Address</label>
-          <input type="text" name="address" >
-          <label for="city">City</label>
-          <input type="text" name="city" >
-          <label for="zip">Zip Code</label>
-          <input type="text" name="zip" pattern="^\d{5}$">
-          <label for="link">Link</label>
-          <input type="text" name="link" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$">
-          <label for="start">Event Commencement</label>
-          <input type="datetime-local" name="start" style="color:white;" required>
-          <label for="end">Event Completion</label>
-          <input type="datetime-local" name="end" style="color:white;" required>
-          <label for="description">Description</label>
-          <input type="text" name="description" >
-          <label for="playerLimit">Player Limit</label>
-          <input type="number" name="playerLimit" >
-          <label for="ageLimit">Minimum Age</label>
-          <input type="number" name="ageLimit">
-          <label for="platform_id">Platform</label>
-          <select id="platform_id" name="platform_id" required>
-            <!-- dynamically fill then reinitialize -->
-          </select>
-          <label for="submit">Submit</label>
-          <button id="submit" name="submit">Submit</button>
-        </form>
-        <div style="float:right">
-
-        </div>
-      </div>
+    <div class="modal-footer">
+      <a href="#" class="waves-effect waves-green btn-flat modal-action modal-close">Agree</a>
     </div>
   </div>
 
@@ -116,28 +37,34 @@ instead of a search field, open a sidebar from the right.
     <li>
       <div class="user-view">
         <div class="background">
-          <img src="http://www.talhaturhal.com/wp-content/uploads/2014/05/ahmak-gamer.jpg">
+          <img src="https://materializecss.com/images/office.jpg">
         </div>
+        <a href="#user"><img class="circle" src="https://materializecss.com/images/yuna.jpg"></a>
+        <a href="#name"><span class="white-text name">John Doe</span></a>
+        <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
       </div>
-      <a href="/user_events/4">
-        <h5 id="username" class="center-align name">John Doe</h5>
-      </a>
     </li>
-    <ul id="itinerary" class="collapsible">
-      <!-- dynamically populate with user_events route (if none, display single collapsible notifying the user while familiarizing them with the ui) -->
-    </ul>
+    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+    <li><a href="#!">Second Link</a></li>
+    <li>
+      <div class="divider"></div>
+    </li>
+    <li><a class="subheader">Subheader</a></li>
+    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
   </ul>
-
+  <!-- SIDENAV_RIGHT -->
   <!-- container wrapper for site title/logo display as well as search functionality and login functionality -->
   <div id="headerBar" class="container-wrapper header_row">
     <div id="headerBarRow" class="row valign-wrapper align-center z-depth-5">
-      <div id="loginProfile" class="col s2 m2 l2 valign center-align">
-        <a onclick="location.href = '/auth/twitch';" class="waves-effect waves-light btn twitch-btn"><i class="material-icons left">account_box</i>Login via Twitch</a>
+      <div class="col s2 m2 l2 valign center-align">
+        <a onclick="location.href = '/auth/twitch';" href="#" data-target="slide-out" class="waves-effect waves-light btn sidenav-trigger"><i class="material-icons left">account_box</i>login</a>
       </div>
-      <div class="col s8 m8 l8 valign center-align">
-        <h1 class="logo center-align"><span>//</span>localhost:9001</h1>
+      <div class="col s7 m7 l7 valign center-align">
+        <h2 class="logo"><span>//</span>localhost:3000</h2>
       </div>
+      <div class="col s1 m1 l1">
 
+      </div>
       <div class="col s2 m2 l2 valign center-align">
         <!-- <a class="waves-effect waves-light btn z-depth-5"><i class="material-icons">search</i></a> -->
 
@@ -147,43 +74,30 @@ instead of a search field, open a sidebar from the right.
   <!-- <div id="ueParallax" class="container"> -->
   <div id="parallax_container" class="container">
     <a href="new_event.html" class="waves-effect waves-light btn" id='New-event'>Create Event</a>
+          <table id="list-movies">
     <table id="list-movies">
-<<<<<<< HEAD
             <thead>
               <tr>
                 <th>Event Name</th>
                 <th>Event Description</th>
                 <th>Delete</th>
                 <th>Join</th>
+                <th>Edit</th>
               </tr>
             </thead>
             <tbody></tbody>
           </table>
     <!-- </div> -->
     <!-- <div id="usersParallax" class="parallax-container" hidden>
-=======
-      <table id="list-movies">
-        <thead>
-          <tr>
-            <th>Event Name</th>
-            <th>Event Description</th>
-            <th>Delete</th>
-            <th>Edit</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-      <!-- </div> -->
-      <!-- <div id="usersParallax" class="parallax-container" hidden>
->>>>>>> edit-route
 
+  </div> -->
   </div>
   <!--JavaScript at end of body for optimized loading-->
-      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-      <script type="text/javascript" src="./js/main.js">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script type="text/javascript" src="./js/main.js">
 
-      </script>
+  </script>
 </body>
 
 </html>

@@ -152,3 +152,20 @@ a.btn-floating {
   background-color: null;
   color: black;
 }
+
+form {
+  color: white;
+}
+
+div.select-wrapper ul li:not(.disabled):not(.optgroup) {
+  margin-left: 20px;
+  color: white;
+}
+
+input:not([type]), input[type=text]:not(.browser-default), input[type=password]:not(.browser-default), input[type=email]:not(.browser-default), input[type=url]:not(.browser-default), input[type=time]:not(.browser-default), input[type=date]:not(.browser-default), input[type=datetime]:not(.browser-default), input[type=datetime-local]:not(.browser-default), input[type=tel]:not(.browser-default), input[type=number]:not(.browser-default), input[type=search]:not(.browser-default), textarea.materialize-textarea {
+  color: white;
+}
+
+ul:not(.browser-default) {
+  max-height: 1000%;
+}

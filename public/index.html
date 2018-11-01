@@ -30,8 +30,8 @@ instead of a search field, open a sidebar from the right.
     </a>
     <ul>
       <li><a class="btn-floating red" onclick="logout()"><i class="material-icons">clear</i></a></li>
-      <li><a class="btn-floating yellow darken-1"><i class="material-icons">list</i></a></li>
-      <li><a class="btn-floating green"><i class="material-icons">fiber_new</i></a></li>
+      <li><a data-target="slide-out" class="btn-floating yellow darken-1 sidenav-trigger"><i class="material-icons">list</i></a></li>
+      <li><a data-target="modal2" class="btn-floating green modal-trigger" onclick="popSel()"><i class="material-icons">fiber_new</i></a></li>
     </ul>
   </div>
 
@@ -73,29 +73,38 @@ instead of a search field, open a sidebar from the right.
   <!-- modal for creation and editing of events -->
   <div id="modal2" class="modal">
     <div class="modal-content">
-      <form>
-        <input type="text" name="eventName" value="">
-        <select name="platform_id">
-          <optgroup label="team 1">
-            <option value="1">Option 1</option>
-            <option value="2">Option 2</option>
-          </optgroup>
-          <optgroup label="team 2">
-            <option value="3">Option 3</option>
-            <option value="4">Option 4</option>
-          </optgroup>
-        </select>
-        <input type="text" name="platform_id" value="">
-        <input type="text" name="address" value="">
-        <input type="text" name="city" value="">
-        <input type="text" name="zip" value="">
-        <input type="text" name="link" value="">
-        <input type="text" name="start" value="">
-        <input type="text" name="end" value="">
-        <input type="text" name="description" value="">
-        <input type="text" name="playerLimit" value="">
-        <input type="text" name="ageLimit" value="">
-      </form>
+      <div class="container">
+        <form id="form" @submit.prevent="submit">
+          <label for="eventName">Event Title</label>
+          <input type="text" name="eventName" required>
+          <label for="address">Street Address</label>
+          <input type="text" name="address" >
+          <label for="city">City</label>
+          <input type="text" name="city" >
+          <label for="zip">Zip Code</label>
+          <input type="text" name="zip" pattern="^\d{5}$">
+          <label for="link">Link</label>
+          <input type="text" name="link" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$">
+          <label for="start">Event Commencement</label>
+          <input type="datetime-local" name="start" style="color:white;" required>
+          <label for="end">Event Completion</label>
+          <input type="datetime-local" name="end" style="color:white;" required>
+          <label for="description">Description</label>
+          <input type="text" name="description" >
+          <label for="playerLimit">Player Limit</label>
+          <input type="number" name="playerLimit" >
+          <label for="ageLimit">Minimum Age</label>
+          <input type="number" name="ageLimit">
+          <label for="platform_id">Platform</label>
+          <select id="platform_id" name="platform_id" required>
+            <!-- dynamically fill then reinitialize -->
+          </select>
+        </form>
+        <div style="float:right">
+          <label for="submit">Submit</label>
+          <button id="submit">Submit</button>
+        </div>
+      </div>
     </div>
   </div>
 

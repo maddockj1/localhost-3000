@@ -1,11 +1,17 @@
-const platform = {}
+const platforms = {}
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('Connected to Main.js')
-  getEvents()
   M.AutoInit();
+  getEvents()
   firstVisit()
   getPlatforms()
+  popSel()
+
+  // let form = document.getElementById('form')
+  // form.addEventListener('onsubmit', function(){
+  //
+  // })
 })
 
 //first time visit
@@ -21,15 +27,23 @@ function firstVisit() {
   }
 }
 // get and organize platforms
-function getPlatforms () {
+function getPlatforms() {
   axios.get(`http://localhost:3000/platforms/`)
     .then((response) => {
-      let { data } = response
-      data.forEach((element) =>{
-        if (!platform[element.company]){
-          platform[element.company] = [{id:element.id,platform:element.platform}]
-        }else{
-          platform[element.company].push({id:element.id,platform:element.platform})
+      let {
+        data
+      } = response
+      data.forEach((element) => {
+        if (!platforms[element.company]) {
+          platforms[element.company] = [{
+            id: element.id,
+            platform: element.platform
+          }]
+        } else {
+          platforms[element.company].push({
+            id: element.id,
+            platform: element.platform
+          })
         }
       })
     })
@@ -43,7 +57,6 @@ function buildAndBurnParallax(arr) {
 }
 // function populates parallax and reinitializes it
 function populateParallax(arr) {
-  console.log("populateParallax")
   let templateHead = `<div class="parallax-container"><div class="parallax"><img src="https://g.foolcdn.com/editorial/images/453677/mans-hands-holding-a-video-game-controller.jpg"></div></div>`
 
   let templateBody = `<div class="section white"><div class="row container"><h2 class="header pHeader">Event Title</h2><div class="row"><div class="col s12 m12 l12"><span>Description:</span><p class="grey-text text-darken-3 lighten-3 pdesc"></p></div></div><div class="row"><div class="col s6 m6 l6"><span>Date and Time:</span><input id="datepicker" type="datetime-local" class="datepicker pDateTime" disabled></div><div class="col s6 m6 l6"><span>Platform:</span><br><p class="grey-text text-darken-3 lighten-3 pPlat"></p></div></div></div><div class="row container-wrapper"><div class="col s6 m6 l6"></div><div class="col s2 m2 l2 center-align"><a class="waves-effect waves-light btn pEdit"><i class="material-icons right">edit</i>Edit</a></div><div class="col s2 m2 l2 center-align"><a class="waves-effect waves-light btn pDelete"><i class="material-icons right">delete</i>Delete</a></div><div class="col s2 m2 l2 center-align"><a class="waves-effect waves-light btn pAttend"><i class="material-icons right">person_add</i>Attend</a></div></div></div><div class="parallax-container"><div class="parallax"><img src="https://g.foolcdn.com/editorial/images/453677/mans-hands-holding-a-video-game-controller.jpg"></div></div>`
@@ -66,12 +79,19 @@ function initCollapsible() {
   let instances = M.Collapsible.init(elems);
 }
 
+function initSelect() {
+  let elems = document.querySelectorAll('select');
+  let instances = M.FormSelect.init(elems);
+}
+
 function getEvents() {
   const contentArea = document.getElementById('parallax_container')
   let headers = document.getElementsByClassName('pHeader')
   let pDateTime = document.getElementsByClassName('pDateTime')
   let pdesc = document.getElementsByClassName('pdesc')
   let pPlat = document.getElementsByClassName('pPlat')
+  let pDelete = document.getElementsByClassName('pDelete')
+  let pEdit = document.getElementsByClassName('pEdit')
   axios.get('http://localhost:3000/events')
     .then((response) => {
       let {
@@ -86,6 +106,12 @@ function getEvents() {
         headers[i].innerText = data[i].eventName
         pDateTime[i].value = data[i].start.slice(0, 16)
         pdesc[i].innerText = data[i].description
+        pDelete[i].addEventListener("click", function(event) {
+          delThisEntry(data[i].id)
+        });
+        pEdit[i].addEventListener("click", function(event) {
+          popSel2(data[i].id)
+        });
       }
     })
 }
@@ -108,10 +134,127 @@ function parseJwt() {
 };
 
 // logout (sorta)
-//
 function logout() {
-    document.cookie = 'token'+'=; Max-Age=-99999999;'
-    window.location = ""; // TO REFRESH THE PAGE
+  document.cookie = 'token' + '=; Max-Age=-99999999;'
+  window.location = ""; // TO REFRESH THE PAGE
+}
+
+// populate platform select
+function popSel() {
+  document.getElementById("submit").addEventListener("click", function(event) {
+    event.preventDefault()
+    postFormData()
+  });
+  let select = document.getElementById('platform_id')
+  select.innerHTML = "<option disabled selected>Platform by Manufacturer</option>"
+  for (let key in platforms) {
+    select.innerHTML += `<optgroup label="${key}" disabled>`
+    platforms[key].forEach((el) => {
+      select.innerHTML += `<option value="${el.id}">${el.platform}</option>`
+    })
+    select.innerHTML += `</optgroup>`
+  }
+  initSelect()
+}
+
+function popSel2(id) {
+  if (id !== parseJwt()){
+    return alert("You are not authorized to edit this")
+  }
+  document.getElementById("submit").addEventListener("click", function(event) {
+    event.preventDefault()
+    patchFormData()
+  });
+  let select = document.getElementById('platform_id')
+  select.innerHTML = "<option disabled selected>Platform by Manufacturer</option>"
+  for (let key in platforms) {
+    select.innerHTML += `<optgroup label="${key}" disabled>`
+    platforms[key].forEach((el) => {
+      select.innerHTML += `<option value="${el.id}">${el.platform}</option>`
+    })
+    select.innerHTML += `</optgroup>`
+  }
+  initSelect()
+  // NOTE: seed data
+  seedEditEvent()
+}
+
+// function to seed data
+function seedEditEvent () {
+
+}
+
+//new event submission
+function getFormData() {
+  let data = {}
+  let form = document.getElementById('form').children
+  data['platform_id'] = document.getElementsByName('platform_id')[0].value
+  document.getElementsByName('platform_id')[0].value = "Platform by Manufacturer"
+  for (let i = 0; i < form.length; i++) {
+    if (form[i].tagName === 'INPUT') {
+      if (form[i].value !== "") {
+        data[form[i].getAttribute('name')] = form[i].value
+        form[i].value = ""
+      }
+    }
+  }
+
+
+  if (!data.eventName) {
+    alert("An Event Title is Required")
+    return
+  } else if (!data.start) {
+    alert("A Start Time is Required")
+    return
+  } else if (!data.end) {
+    alert("An End Time is Required")
+    return
+  } else if (!data.platform_id || data.platform_id === "Platform by Manufacturer") {
+    alert("A Platform is Required")
+    return
+  }
+  data.start = `${data.start}:00.000Z`
+  data.end = `${data.end}:00.000Z`
+  return data
+}
+
+function postFormData() {
+  let data = getFormData()
+  axios.post(`http://localhost:3000/events/`, data)
+    .then(res => {
+      console.log(res);
+      console.log(res.data);
+      getEvents()
+    })
+    toggleM2(false)
+}
+
+
+function patchFormData() {
+  let data = getFormData()
+  console.log('patch')
+}
+
+function delThisEntry (id) {
+  axios.delete(`http://localhost:3000/events/${id}`)
+  .then(res => {
+    console.log(res);
+    console.log(res.data);
+    getEvents()
+  })
+
+}
+
+function toggleM2 (bool) {
+  if (bool !== true && bool !== false){
+    alert("o.o what are you doing?")
+  }
+  let instance = M.Modal.getInstance(modal2);
+  if (bool){
+    instance.open()
+  }else{
+    instance.close()
+  }
 }
 
 // original getEvents()

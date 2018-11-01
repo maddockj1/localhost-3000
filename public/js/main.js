@@ -175,13 +175,6 @@ function popSel2(id) {
     select.innerHTML += `</optgroup>`
   }
   initSelect()
-  // NOTE: seed data
-  seedEditEvent()
-}
-
-// function to seed data
-function seedEditEvent () {
-
 }
 
 //new event submission
@@ -209,7 +202,7 @@ function getFormData() {
   } else if (!data.end) {
     alert("An End Time is Required")
     return
-  } else if (!data.platform_id || data.platform_id === "Platform by Manufacturer") {
+  } else if (!data.platform_id) {
     alert("A Platform is Required")
     return
   }

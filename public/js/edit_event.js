@@ -26,7 +26,7 @@ function handleFormSubmit() {
     console.log('postData', postData);
 
     // axios.post that data to the correct backend route
-    axios.put('/events/3', postData)
+    axios.put('/events/2', postData)
     .then((response) => {
       console.log(`response:`,response);
       // document.getElementById("submit-form").disabled = true

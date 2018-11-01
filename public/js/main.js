@@ -79,11 +79,14 @@ function getEvents() {
         let deleteButton = document.createElement('button')
         let join_td = document.createElement('td')
         let joinButton = document.createElement('button')
+        let edit_td = document.createElement('td')
+        let editButton = document.createElement('button')
 
         eventName.innerText = event.eventName
         description.innerText = event.description
         deleteButton.innerText = 'Delete'
-        joinButton.innerText = `Join Bitch`
+        joinButton.innerText = `Join`
+        editButton.innerText = `Edit`
 
         deleteButton.setAttribute('data-id', event.id)
         deleteButton.setAttribute('host-id', event.host_id)
@@ -92,6 +95,10 @@ function getEvents() {
         joinButton.setAttribute('data-id', event.id)
         joinButton.setAttribute('class', 'waves-effect waves-light btn')
         joinButton.setAttribute('id', 'join')
+
+        editButton.setAttribute('data-id', event.id)
+        editButton.setAttribute('class', 'waves-effect waves-light btn')
+        editButton.setAttribute('id', 'edit')
         //console.log(response.data);
         deleteButton.addEventListener('click', (ev) => {
           let eventId = ev.target.getAttribute('data-id')
@@ -115,6 +122,7 @@ function getEvents() {
               console.log(err)
             })
         })
+
 
         //Append to page
         tr.appendChild(eventName)

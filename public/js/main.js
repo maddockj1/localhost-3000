@@ -3,8 +3,18 @@ document.addEventListener('DOMContentLoaded', () => {
   getEvents()
   handleCreateForm()
   handleEditForm()
+  document.getElementById('new-btn').addEventListener('click', handleNewButton)
 
-})
+const createForm = document.getElementById('create-form')
+const editForm = document.getElementById('edit-form')
+const table = document.getElementById('table')
+
+function handleNewButton (event) {
+  editForm.style.display = 'none'
+  table.style.display = 'none'
+  createForm.style.display = 'block'
+}
+
 
 function handleEditForm() {
   let form = document.getElementById('edit-event')
@@ -14,7 +24,9 @@ function handleEditForm() {
     // grab all values from the form
     let postData = {}
     let formElements = ev.target.elements
-
+    let id = parseInt(document.getElementById('whatever').value)
+    console.log('ID IS>>>>>', id);
+    debugger
     for (var i = 0; i < formElements.length; i++) {
       let inputName = formElements[i].name
       if( inputName ) {
@@ -25,9 +37,8 @@ function handleEditForm() {
     postData.start = `${postData.start}:00.000Z`
 
     console.log('postData', postData);
-
     // axios.post that data to the correct backend route
-    axios.put('/events/6', postData)
+    axios.put(`/events/${id}`, postData)
     .then((response) => {
       console.log(`response:`,response);
       // document.getElementById("submit-form").disabled = true
@@ -128,6 +139,14 @@ function getEvents() {
             })
         })
 
+        editButton.addEventListener('click', (event) => {
+          // editForm.reset()
+          document.getElementById('whatever').value = event.target.getAttribute('data-id')
+          editForm.style.display = 'block'
+          table.style.display = 'none'
+          createForm.style.display = 'none'
+        })
+
         joinButton.addEventListener('click', (ev) => {
           let eventId = ev.target.getAttribute('data-id')
           console.log(eventId);
@@ -157,3 +176,4 @@ function getEvents() {
     })
 
 }
+})

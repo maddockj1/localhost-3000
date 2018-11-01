@@ -35,6 +35,9 @@
     <div id="headerBarRow" class="row valign-wrapper align-center z-depth-5">
       <div class="col s2 m2 l2 valign center-align">
         <a onclick="location.href = '/auth/twitch';" href="#" data-target="slide-out" class="waves-effect waves-light btn sidenav-trigger"><i class="material-icons left">account_box</i>login</a>
+        <button type="button" class="btn btn-default" id='new-btn'>
+          Create New Event
+        </button>
       </div>
       <div class="col s7 m7 l7 valign center-align">
         <h2 class="logo"><span>//</span>localhost:3000</h2>
@@ -73,8 +76,8 @@
   <div id="edit-form">
     <form id="edit-event">
       <div class='input-field'>
-        <label for="event-id">Event ID</label>
-        <input type="number" name="event-id" id="event-id" readonly><br>
+        <label for="event_id"></label>
+        <input type="number" name="event_id" id="whatever" readonly><br>
       </div>
       <div class='input-field'>
         <label for="eventName">Event Name</label>
@@ -118,6 +121,7 @@
         <input class="waves-effect waves-light btn" type="submit" value="Submit" id="submit-form">
     </form>
   </div>
+</div>
 
 
   <!--Create Event Form-->
@@ -165,6 +169,7 @@
         <input onclick="location.href = '/';" class="waves-effect waves-light btn" type="submit" value="Submit" id="submit-form">
     </form>
   </div>
+</div>
 </body>
 
 </html>

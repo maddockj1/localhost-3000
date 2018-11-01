@@ -77,21 +77,21 @@ function getEvents() {
         let description = document.createElement('td')
         let del_td = document.createElement('td')
         let deleteButton = document.createElement('button')
-        let edit_td = document.createElement('td')
-        let editButton = document.createElement('button')
+        let join_td = document.createElement('td')
+        let joinButton = document.createElement('button')
 
         eventName.innerText = event.eventName
         description.innerText = event.description
         deleteButton.innerText = 'Delete'
-        editButton.innerText = `Join Bitch`
+        joinButton.innerText = `Join Bitch`
 
         deleteButton.setAttribute('data-id', event.id)
         deleteButton.setAttribute('host-id', event.host_id)
         deleteButton.setAttribute('class', 'waves-effect waves-light btn')
 
-        editButton.setAttribute('data-id', event.id)
-        editButton.setAttribute('class', 'waves-effect waves-light btn')
-        editButton.setAttribute('id', 'join')
+        joinButton.setAttribute('data-id', event.id)
+        joinButton.setAttribute('class', 'waves-effect waves-light btn')
+        joinButton.setAttribute('id', 'join')
         //console.log(response.data);
         deleteButton.addEventListener('click', (ev) => {
           let eventId = ev.target.getAttribute('data-id')
@@ -104,7 +104,7 @@ function getEvents() {
               //console.log(err)
             })
         })
-        editButton.addEventListener('click', (ev) => {
+        joinButton.addEventListener('click', (ev) => {
           let eventId = ev.target.getAttribute('data-id')
           console.log(eventId);
           axios.post(`/user_events/${eventId}`)
@@ -121,8 +121,8 @@ function getEvents() {
         tr.appendChild(description)
         tr.appendChild(del_td)
         del_td.appendChild(deleteButton)
-        tr.appendChild(edit_td)
-        edit_td.appendChild(editButton)
+        tr.appendChild(join_td)
+        join_td.appendChild(joinButton)
         tbody.appendChild(tr)
 
 

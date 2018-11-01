@@ -113,7 +113,7 @@ router.post('/', verifyBody, jwtVerify, (req, res, next) => {
     "address": req.body.address,
     "city": req.body.city,
     "zip": parseInt(req.body.zip),
-    "link": `www.linkandzelda.com`,
+    "link": req.body.link,
     "start": req.body.start,
     "end": req.body.end,
     "description": req.body.description,
@@ -157,18 +157,17 @@ router.put('/:id', verifyId, jwtVerify, (req, res, next) => {
         .limit(1)
         .update({
           "eventName": req.body.eventName,
-          "platform_id": req.body.platform_id,
-          "host_id": req.body.host_id,
+          "platform_id": parseInt(req.body.platform_id),
+          "host_id": req.payload.id,
           "address": req.body.address,
           "city": req.body.city,
-          "zip": req.body.zip,
+          "zip": parseInt(req.body.zip),
           "link": req.body.link,
-          "date": req.body.date,
           "start": req.body.start,
           "end": req.body.end,
           "description": req.body.description,
-          "playerLimit": req.body.playerLimit,
-          "ageLimit": req.body.ageLimit
+          "playerLimit": parseInt(req.body.playerLimit),
+          "ageLimit": parseInt(req.body.ageLimit)
         })
         .returning('*')
         .then((data) => {

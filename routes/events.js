@@ -114,7 +114,7 @@ router.post('/', verifyBody, jwtVerify, (req, res, next) => {
     "city": req.body.city,
     "zip": parseInt(req.body.zip),
     // "link": `www.linkandzelda.com`,
-    "link": req.body.link,
+    "link": `www.linkandzelda.com`,
     "start": req.body.start,
     "end": req.body.end,
     "description": req.body.description,

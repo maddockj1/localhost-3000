@@ -104,7 +104,7 @@ router.get('/:id', verifyId, (req, res, next) => {
 })
 
 // CREATE ONE record for this events
-router.post('/', verifyBody, jwtVerify, (req, res, next) => {
+router.post('/', verifyBody, (req, res, next) => {
   console.log(req)
   let newEvent = {
     "eventName": req.body.eventName,

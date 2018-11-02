@@ -10,10 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
   popSel()
 
   let form = document.getElementById('form')
-  form.addEventListener('onsubmit', function(e){
-  e.preventDefault()
-
+  form.addEventListener('submit', function(e){
+  postFormData()
   })
+
 })
 
 //first time visit
@@ -143,7 +143,6 @@ function logout() {
 
 // populate platform select
 function popSel() {
-  
   let select = document.getElementById('platform_id')
   select.innerHTML = "<option disabled selected>Platform by Manufacturer</option>"
   for (let key in platforms) {
@@ -160,10 +159,7 @@ function popSel2(id) {
   if (id !== parseJwt()) {
     return alert("You are not authorized to edit this")
   }
-  document.getElementById("submit").addEventListener("click", function(event) {
-    event.preventDefault()
-    patchFormData()
-  });
+
   let select = document.getElementById('platform_id')
   select.innerHTML = "<option disabled selected>Platform by Manufacturer</option>"
   for (let key in platforms) {
@@ -210,19 +206,9 @@ function getFormData() {
   return data
 }
 
-//patch-fix
-function counter(num){
-  if(num === 0){
-    num++
-    return true
-  }else{
-    num = 0
-    return false
-  }
-}
 
 function postFormData() {
-  if(counter()){}else{return}
+  console.log("post");
   let data = getFormData()
   axios.post(`http://localhost:3000/events/`, data)
     .then(res => {
@@ -230,14 +216,10 @@ function postFormData() {
       console.log(res.data);
       getEvents()
     })
-  toggleM2(false)
 }
 
 
-function patchFormData() {
-  let data = getFormData()
-  console.log('patch')
-}
+
 
 function delThisEntry(id) {
   axios.delete(`http://localhost:3000/events/${id}`)
